@@ -1,0 +1,28 @@
+{
+  "result": [
+    {
+      "class_name": "Article",
+      "cloudinary_video_url": null,
+      "comments_count": 0,
+      "id": 1062355,
+      "path": "/canalun/safer-type-predicate-in-typescript-1f3o",
+      "public_reactions_count": 5,
+      "readable_publish_date": "Apr 21",
+      "reading_time": 3,
+      "title": "Safer Type Predicate in TypeScript",
+      "user_id": 850691,
+      "video_duration_string": "00:00",
+      "published_at_int": 1650512953,
+      "tag_list": [
+        "typescript",
+        "programming"
+      ],
+      "flare_tag": null,
+      "user": {
+        "name": "canalun",
+        "profile_image_90": "https://res.cloudinary.com/practicaldev/image/fetch/s--HZlT6Kp0--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/850691/65c0b2a0-4974-4fa5-b94a-c6a75b56f47c.png",
+        "username": "canalun"
+      }
+    }
+  ]
+}

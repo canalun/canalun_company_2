@@ -4,6 +4,7 @@ import { Dog } from "../components/AA/Dog.tsx";
 import { parse } from "xml/mod.ts";
 import { denoPlugin } from "https://deno.land/x/esbuild_deno_loader@0.5.2/mod.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
+import * as path from "https://deno.land/std@0.79.0/path/mod.ts";
 
 type Article = {
   language: "ja" | "en";
@@ -93,6 +94,8 @@ export const handler: Handlers<Article[]> = {
     const hatenaRespText = await hatenaResp.text();
     try {
       performance.mark("hatena parse start");
+      console.log(hatenaRespText);
+      // TODO: ここが 700-800ms かかっているのでキャッシュしたい
       const parsed = parse(hatenaRespText);
       performance.mark("hatena parse end");
       parsed.feed.entry.map((entry) => {
@@ -115,14 +118,27 @@ export const handler: Handlers<Article[]> = {
 
     performance.mark("devto fetch start");
 
-    const devtoResp = await fetch(
-      "https://dev.to/search/feed_content?user_id=" + env.DEVTO_USER_ID +
-        "&class_name=Article",
-    );
+    // const devtoResp = await fetch(
+    //   "https://dev.to/search/feed_content?user_id=" + env.DEVTO_USER_ID +
+    //     "&class_name=Article",
+    // );
+    // const data = await devtoResp.json();
 
     performance.mark("devto fetched");
 
-    const data = await devtoResp.json();
+    function pathResolver(meta: ImportMeta): (p: string) => string {
+      return (p) => path.fromFileUrl(new URL(p, meta.url));
+    }
+
+    const resolve = pathResolver(import.meta);
+    console.log(resolve("../static/devtoCache.json"));
+
+    const devtoResp = await Deno.readTextFile(
+      resolve("../static/devtoCache.json"),
+    );
+
+    const data = await JSON.parse(devtoResp);
+
     data.result.map((entry) => {
       articles.push({
         language: "en",
