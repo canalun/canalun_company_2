@@ -224,8 +224,8 @@ export default function Index({ data: articles }: PageProps<Article[] | null>) {
                 style="color: #cccccc; text-decoration: none;"
               >
                 canalundayo
-              </a>{" "}
-              ·{" "}
+              </a>
+              ·
               <a
                 href="https://soundcloud.com/user-504103970/sets/grand-canyon"
                 title="one day"
@@ -238,18 +238,21 @@ export default function Index({ data: articles }: PageProps<Article[] | null>) {
             <h3 id="guest-rooms">SUPER NICE guest rooms</h3>
             <ul>
               <li>
-                <a href="./guest_rooms/hotel/index.html">
-                  <strong>hotel</strong>
-                </a>: for those who like riddles…{" "}
-                <strong>
-                  <span style="color:red;">[temporary closing]</span>
-                </strong>
-              </li>
-              <li>
                 <a href="/guest_rooms/oshiriGame">
                   <strong>oshiri katori</strong>
-                </a>: for those who want summer chill feeling...!{" "}
+                </a>: for those who want summer chill feeling...!
+              </li>
+              <li>
+                <a href="/guest_rooms/reverseGame">
+                  <strong>reverse game</strong>
+                </a>: irritating puzzle
+              </li>
+              <li>
+                <a href="./guest_rooms/hotel/index.html">
+                  <strong>hotel</strong>
+                </a>: for those who like riddles…
                 <strong>
+                  <span style="color:red;">[temporary closing]</span>
                 </strong>
               </li>
             </ul>
