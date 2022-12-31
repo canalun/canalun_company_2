@@ -9,8 +9,8 @@ const initOshiri = (playSoundEffect) => {
   const width = 70;
   const onaraTime = 600;
   const trackDelay = 0.1; //second
-  const oshiriImgSrc = "/oshiriGame/oshiri.svg";
-  const onaraImgSrc = "/oshiriGame/onara.svg";
+  const oshiriImgSrc = "/oshiriGame/img/oshiri.svg";
+  const onaraImgSrc = "/oshiriGame/img/onara.svg";
 
   const oshiri = document.createElement("img");
   document.body.appendChild(oshiri);
@@ -67,7 +67,7 @@ const increaseSpeed = () => {
 };
 
 const generateMosquito = () => {
-  const imgSrc = "/oshiriGame/mosquito.png";
+  const imgSrc = "/oshiriGame/img/mosquito.png";
   const width = 30;
   const height = 30;
   const noMosquitoMargin = window.innerWidth * 0.1;
@@ -122,7 +122,7 @@ const generateBee = () => {
     return;
   }
 
-  const imgSrc = "/oshiriGame/bee.png";
+  const imgSrc = "/oshiriGame/img/bee.png";
   const width = 30;
   const height = 30;
   const noBeeMargin = window.innerWidth * 0.1;
@@ -323,7 +323,7 @@ const generateSpray = () => {
     return;
   }
 
-  const imgSrc = "/oshiriGame/spray.png";
+  const imgSrc = "/oshiriGame/img/spray.png";
   const width = 30;
   const height = 30;
   const noSprayMargin = window.innerWidth * 0.1;
@@ -406,7 +406,7 @@ const generateYakiimo = () => {
     return;
   }
 
-  const imgSrc = "/oshiriGame/yakiimo.png";
+  const imgSrc = "/oshiriGame/img/yakiimo.png";
   const width = 30;
   const height = 30;
   const noYakiimoMargin = window.innerWidth * 0.1;
@@ -470,7 +470,7 @@ const causeYakiimoEffect = () => {
   const height = 900;
   const width = 900;
   const trackDelay = 0.1; //second
-  const ougiImgSrc = "/oshiriGame/ougi.svg";
+  const ougiImgSrc = "/oshiriGame/img/ougi.svg";
 
   const ougi = document.createElement("img");
   document.body.appendChild(ougi);
@@ -685,7 +685,7 @@ const displayStartDialog = () => {
 
 const playBackgroundMusic = () => {
   const backgroundMusic = document.createElement("audio");
-  backgroundMusic.src = "../../materials/audio/oshiri-katori.mp3";
+  backgroundMusic.src = "/oshiriGame/audio/oshiri-katori.mp3";
   backgroundMusic.id = "backgroundMusic";
   backgroundMusic.autoplay = true;
   document.body.appendChild(backgroundMusic);
@@ -694,7 +694,7 @@ const playBackgroundMusic = () => {
 
 const setOnaraSoundEffect = () => {
   const onaraSoundEffect = document.createElement("audio");
-  onaraSoundEffect.src = "../../materials/audio/onara.mp3";
+  onaraSoundEffect.src = "/oshiriGame/audio/onara.mp3";
   onaraSoundEffect.id = "onaraSoundEffect";
   onaraSoundEffect.autoplay = true;
   document.body.appendChild(onaraSoundEffect);
@@ -703,7 +703,7 @@ const setOnaraSoundEffect = () => {
 
 const setBombSoundEffect = () => {
   const bombSoundEffect = document.createElement("audio");
-  bombSoundEffect.src = "../../materials/audio/bomb.mp3";
+  bombSoundEffect.src = "/oshiriGame/audio/bomb.mp3";
   bombSoundEffect.id = "bombSoundEffect";
   bombSoundEffect.autoplay = true;
   document.body.appendChild(bombSoundEffect);
