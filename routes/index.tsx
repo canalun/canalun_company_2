@@ -2,6 +2,8 @@ import { Head } from "$fresh/runtime.ts";
 import { Handler, Handlers, PageProps } from "$fresh/server.ts";
 import { Dog } from "../components/AA/Dog.tsx";
 import { parse } from "xml/mod.ts";
+import { denoPlugin } from "https://deno.land/x/esbuild_deno_loader@0.5.2/mod.ts";
+import { config } from "https://deno.land/x/dotenv/mod.ts";
 
 type Article = {
   language: "ja" | "en";
@@ -43,9 +45,22 @@ const categoryMap = new Map<
 export const handler: Handlers<Article[]> = {
   async GET(_, ctx) {
     const articles: Article[] = [];
+
+    const env = config();
+
+    performance.clearMarks();
+    performance.clearMeasures();
+    performance.mark("start");
+
+    performance.mark("zenn fetch start");
+
     const zennResp = await fetch(
-      "https://zenn.dev/api/articles?username=canalun&count=10&order=latest",
+      "https://zenn.dev/api/articles?username=" + env.ZENN_USER_ID +
+        "&count=10&order=latest",
     );
+
+    performance.mark("zenn fetched");
+
     if (200 <= zennResp.status && zennResp.status < 300) {
       const data = await zennResp.json();
       const zennArticles = data.articles;
@@ -60,38 +75,53 @@ export const handler: Handlers<Article[]> = {
       );
     }
 
-    const hatenaUserName = "canalundayo";
-    const hatenaPassword = "ap23n9rqk0";
+    performance.mark("hatena fetch start");
+
     const hatenaResp = await fetch(
-      "https://blog.hatena.ne.jp/" + "canalundayo" + "/" +
+      "https://blog.hatena.ne.jp/" + env.HATENA_ID + "/" +
         "canalundayo.hatenablog.com" + "/atom/entry",
       {
         headers: {
-          Authorization: "Basic " + btoa(`${hatenaUserName}:${hatenaPassword}`),
+          Authorization: "Basic " +
+            btoa(`${env.HATENA_USER_ID}:${env.HATENA_PASSWORD}`),
         },
       },
     );
-    const hatenaRespText = await hatenaResp.text();
-    parse(hatenaRespText).feed.entry.map((entry) => {
-      if (entry["app:control"]["app:draft"] === "no") {
-        articles.push({
-          language: "ja",
-          category: "thoughts",
-          title: entry.title,
-          link: entry.link.find((link) =>
-            link["@rel"] === "alternate"
-          )["@href"],
-          date: new Date(entry.published),
-        });
-      }
-      return;
-    });
 
-    const devtoUserId = "850691";
+    performance.mark("hatena fetched");
+
+    const hatenaRespText = await hatenaResp.text();
+    try {
+      performance.mark("hatena parse start");
+      const parsed = parse(hatenaRespText);
+      performance.mark("hatena parse end");
+      parsed.feed.entry.map((entry) => {
+        if (entry["app:control"]["app:draft"] === "no") {
+          articles.push({
+            language: "ja",
+            category: "thoughts",
+            title: entry.title,
+            link: entry.link.find((link) =>
+              link["@rel"] === "alternate"
+            )["@href"],
+            date: new Date(entry.published),
+          });
+        }
+        return;
+      });
+    } catch (ignored) {
+      console.log("couldn't parse hatena response");
+    }
+
+    performance.mark("devto fetch start");
+
     const devtoResp = await fetch(
-      "https://dev.to/search/feed_content?user_id=" + devtoUserId +
+      "https://dev.to/search/feed_content?user_id=" + env.DEVTO_USER_ID +
         "&class_name=Article",
     );
+
+    performance.mark("devto fetched");
+
     const data = await devtoResp.json();
     data.result.map((entry) => {
       articles.push({
@@ -104,9 +134,54 @@ export const handler: Handlers<Article[]> = {
       return;
     });
 
+    performance.mark("sort start");
+
     articles.sort((a, b) => {
       return b.date.getTime() - a.date.getTime();
     });
+
+    performance.mark("sort end");
+
+    performance.measure("zenn fetching", "zenn fetch start", "zenn fetched");
+    performance.measure("zenn parsing", "zenn fetched", "hatena fetch start");
+    performance.measure(
+      "hatena fetching",
+      "hatena fetch start",
+      "hatena fetched",
+    );
+    performance.measure(
+      "hatena texting",
+      "hatena fetched",
+      "hatena parse start",
+    );
+    performance.measure(
+      "hatena parsing",
+      "hatena parse start",
+      "hatena parse end",
+    );
+    performance.measure(
+      "hatena pushing",
+      "hatena parse end",
+      "devto fetch start",
+    );
+    performance.measure("devto fetching", "devto fetch start", "devto fetched");
+    performance.measure("devto parsing", "devto fetched", "sort start");
+    performance.measure("sorting", "sort start", "sort end");
+
+    console.log("--------------------------------");
+
+    let total = 0;
+    for (const i of performance.getEntriesByType("measure")) {
+      total += i.duration;
+    }
+
+    for (const i of performance.getEntriesByType("measure")) {
+      console.log(`${i.name}: ${i.duration}(${i.duration * 100 / total}%)`);
+    }
+    console.log(total);
+
+    console.log("--------------------------------");
+
     return ctx.render(articles);
   },
 };
