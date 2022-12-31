@@ -5,7 +5,7 @@ export function CeoImg() {
   for (const dirEntry of Deno.readDirSync(resolve("../static/CEOs"))) {
     srcs.push(dirEntry.name);
   }
-  const chosenSrc = srcs[Math.round(Math.random() * (srcs.length - 1))];
+  const chosenSrc = srcs[Math.floor(Math.random() * srcs.length)];
 
   const width = 395;
   const height = 395;
