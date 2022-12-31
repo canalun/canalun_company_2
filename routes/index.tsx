@@ -1,9 +1,9 @@
 import { Head } from "$fresh/runtime.ts";
-import { Handler, Handlers, PageProps } from "$fresh/server.ts";
-import { Dog } from "@/components/AA/Dog.tsx";
+import { Handlers, PageProps } from "$fresh/server.ts";
+import { Dog } from "@/components/AA.tsx";
 import { parse } from "xml/mod.ts";
 import { config } from "dotenv/mod.ts";
-import * as path from "std/path/mod.ts";
+import { resolve } from "@/utils/pathResolver.ts";
 
 type Article = {
   language: "ja" | "en";
@@ -117,6 +117,7 @@ export const handler: Handlers<Article[]> = {
 
     performance.mark("devto fetch start");
 
+    // MEMO: めったに叩かないわりに 400ms かかるのでキャッシュから取得
     // const devtoResp = await fetch(
     //   "https://dev.to/search/feed_content?user_id=" + env.DEVTO_USER_ID +
     //     "&class_name=Article",
@@ -124,13 +125,6 @@ export const handler: Handlers<Article[]> = {
     // const data = await devtoResp.json();
 
     performance.mark("devto fetched");
-
-    function pathResolver(meta: ImportMeta): (p: string) => string {
-      return (p) => path.fromFileUrl(new URL(p, meta.url));
-    }
-
-    const resolve = pathResolver(import.meta);
-    console.log(resolve("../static/devtoCache.json"));
 
     const devtoResp = await Deno.readTextFile(
       resolve("../static/devtoCache.json"),
