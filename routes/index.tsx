@@ -246,7 +246,7 @@ export default function Index({ data: articles }: PageProps<Article[] | null>) {
                 </strong>
               </li>
               <li>
-                <a href="./guest_rooms/oshirigame">
+                <a href="/guest_rooms/oshiriGame">
                   <strong>oshiri katori</strong>
                 </a>: for those who want summer chill feeling...!{" "}
                 <strong>

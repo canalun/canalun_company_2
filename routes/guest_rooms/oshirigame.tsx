@@ -1,5 +1,4 @@
 import { Head } from "$fresh/runtime.ts";
-import { resolve } from "@/utils/pathResolver.ts";
 
 export default function OshiriGamePage() {
   return (
