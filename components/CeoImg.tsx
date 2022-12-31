@@ -1,13 +1,14 @@
 import { resolve } from "../utils/pathResolver.ts";
 
 export function CeoImg() {
-  const chosenSrc = (() => {
-    const srcs = [];
-    for (const dirEntry of Deno.readDirSync(resolve("../static/CEOs"))) {
-      srcs.push(dirEntry.name);
-    }
-    return srcs[Math.round(Math.random() * srcs.length)];
-  })();
+  const srcs = [];
+  for (const dirEntry of Deno.readDirSync(resolve("../static/CEOs"))) {
+    srcs.push(dirEntry.name);
+  }
+  const chosenSrc = srcs[Math.round(Math.random() * (srcs.length - 1))];
 
-  return <img src={"/CEOs/" + chosenSrc} />;
+  const width = 395;
+  const height = 395;
+
+  return <img width={width} height={height} src={"/CEOs/" + chosenSrc} />;
 }
