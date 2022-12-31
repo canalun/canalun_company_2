@@ -5,6 +5,12 @@
 /// <reference lib="deno.ns" />
 
 import { start } from "$fresh/server.ts";
-import manifest from "./fresh.gen.ts";
+import manifest from "@/fresh.gen.ts";
+
+// TODO: ここにエントリーのキャッシュデータの更新ロジック仕込む
+//import { cron } from "deno_cron/cron.ts";
+// cron("*/5 * * * * *", () => {
+//   console.log("5sec");
+// });
 
 await start(manifest, { port: 8100 });
