@@ -4,6 +4,7 @@ import { Dog } from "@/components/AA.tsx";
 import { parse } from "xml/mod.ts";
 import { config } from "dotenv/mod.ts";
 import { resolve } from "@/utils/pathResolver.ts";
+import { CeoImg } from "../components/CeoImg.tsx";
 
 type Article = {
   language: "ja" | "en";
@@ -177,9 +178,7 @@ export default function Index({ data: articles }: PageProps<Article[] | null>) {
           <div class="stackedit__html">
             <h1 id="welcome-to-canalun-company">Welcome to Canalun Company!</h1>
             <h2 id="ceos">One of our BRILLIANT CEOs</h2>
-            <div id="ceoImage">
-              <script src="scripts/dist/app.js" charset="utf-8"></script>
-            </div>
+            <CeoImg />
             <h2 id="values">GREAT Values</h2>
             <ul>
               <li>Go to bed when feeling sleepy</li>
