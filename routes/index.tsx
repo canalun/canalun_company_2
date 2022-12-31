@@ -1,10 +1,9 @@
 import { Head } from "$fresh/runtime.ts";
 import { Handler, Handlers, PageProps } from "$fresh/server.ts";
-import { Dog } from "../components/AA/Dog.tsx";
+import { Dog } from "@/components/AA/Dog.tsx";
 import { parse } from "xml/mod.ts";
-import { denoPlugin } from "https://deno.land/x/esbuild_deno_loader@0.5.2/mod.ts";
-import { config } from "https://deno.land/x/dotenv/mod.ts";
-import * as path from "https://deno.land/std@0.79.0/path/mod.ts";
+import { config } from "dotenv/mod.ts";
+import * as path from "std/path/mod.ts";
 
 type Article = {
   language: "ja" | "en";
