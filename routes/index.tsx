@@ -246,8 +246,8 @@ export default function Index({ data: articles }: PageProps<Article[] | null>) {
                 </strong>
               </li>
               <li>
-                <a href="./guest_rooms/oshiri_katori/index.html">
-                  <strong>おしりかとり</strong>
+                <a href="./guest_rooms/oshirigame">
+                  <strong>oshiri katori</strong>
                 </a>: for those who want summer chill feeling...!{" "}
                 <strong>
                 </strong>
