@@ -27,12 +27,11 @@ export function ArticleList(props: { articles: Article[] }) {
               <li
                 style={{
                   "list-style": "none",
-                  "marginBottom": "4px",
-                  "text-indent": "-0.6em",
+                  "marginBottom": "10px",
                 }}
               >
                 <div>
-                  - {a.date.toLocaleDateString()}:{" "}
+                  {a.date.toLocaleDateString()}:{" "}
                   <a
                     href={a.link}
                   >
