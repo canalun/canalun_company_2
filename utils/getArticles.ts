@@ -33,7 +33,7 @@ async function getZennArticles(user_id: string): Promise<Article[]> {
 
   const zennResp = await fetch(
     "https://zenn.dev/api/articles?username=" + user_id +
-      "&count=10&order=latest",
+      "&order=latest",
   );
 
   if (200 <= zennResp.status && zennResp.status < 300) {
