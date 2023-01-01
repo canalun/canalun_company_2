@@ -1,5 +1,5 @@
 import { fromFileUrl } from "std/path/mod.ts";
 
-export function resolve(s: string): string {
+export function resolvePath(s: string): string {
   return fromFileUrl(new URL(s, import.meta.url));
 }
