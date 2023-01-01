@@ -13,8 +13,14 @@ export async function getArticles(): Promise<Article[]> {
     env.HATENA_PASSWORD,
   );
   const devtoArticles = await getDevtoArticles();
+  const otherArticles = await getOtherArticles();
 
-  const articles = [...zennArticles, ...hatenaArticles, ...devtoArticles];
+  const articles = [
+    ...zennArticles,
+    ...hatenaArticles,
+    ...devtoArticles,
+    ...otherArticles,
+  ];
   articles.sort((a, b) => {
     return b.date.getTime() - a.date.getTime();
   });
@@ -41,15 +47,17 @@ async function getZennArticles(user_id: string): Promise<Article[]> {
         path: string;
         published_at: string | number | Date;
       },
-    ) =>
+    ) => {
+      console.log(article.published_at);
+      console.log(new Date(article.published_at));
       articles.push({
         language: "ja",
         category: "engineering",
         title: article.title,
         link: "https://zenn.dev" + article.path,
         date: new Date(article.published_at),
-      })
-    );
+      });
+    });
   }
 
   return articles;
@@ -130,7 +138,7 @@ async function getDevtoArticles(): Promise<Article[]> {
       entry: {
         title: string;
         path: string;
-        published_at_int: string;
+        readable_publish_date: string;
       },
     ) => {
       articles.push({
@@ -138,7 +146,38 @@ async function getDevtoArticles(): Promise<Article[]> {
         category: "engineering",
         title: entry.title,
         link: "https://dev.to" + entry.path,
-        date: new Date(entry.published_at_int),
+        date: new Date(entry.readable_publish_date),
+      });
+      return;
+    },
+  );
+
+  return articles;
+}
+
+async function getOtherArticles(): Promise<Article[]> {
+  const articles: Article[] = [];
+
+  const otherArticles = await Deno.readTextFile(
+    resolvePath("../static/otherArticlesCache.json"),
+  );
+  const data = await JSON.parse(otherArticles);
+
+  data.result.map(
+    (
+      // TODO: これは付けているだけなので、io.ts でランタイム型チェックを入れたい
+      entry: {
+        title: string;
+        path: string;
+        published_at: string;
+      },
+    ) => {
+      articles.push({
+        language: "ja",
+        category: "engineering",
+        title: entry.title,
+        link: entry.path,
+        date: new Date(entry.published_at),
       });
       return;
     },
