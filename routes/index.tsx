@@ -1,7 +1,7 @@
 import { Head } from "$fresh/runtime.ts";
 import { Dog } from "@/components/AA.tsx";
 import { CeoImg } from "@/components/CeoImg.tsx";
-import { ReadingList } from "@/components/ReadingList.tsx";
+import { ArticleList } from "@/components/ArticleList.tsx";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Article } from "@/types/Articles.ts";
 import { getArticles } from "@/utils/getArticles.ts";
@@ -65,7 +65,7 @@ export default function Index({ data: article }: PageProps<Article[]>) {
             </ul>
             <h2 id="business">BIG business</h2>
             <h3 id="articles">SUPER articles</h3>
-            <ReadingList articles={article} />
+            <ArticleList articles={article} />
             <h3 id="musics">SUPER MUSIC</h3>
             <iframe
               width="100%"
