@@ -1,140 +1,19 @@
 import { Head } from "$fresh/runtime.ts";
-import { Handlers, PageProps } from "$fresh/server.ts";
 import { Dog } from "@/components/AA.tsx";
-import { parse } from "xml/mod.ts";
-import { config } from "dotenv/mod.ts";
-import { resolve } from "@/utils/pathResolver.ts";
-import { CeoImg } from "../components/CeoImg.tsx";
+import { CeoImg } from "@/components/CeoImg.tsx";
+import { ReadingList } from "@/components/ReadingList.tsx";
+import { Handlers, PageProps } from "$fresh/server.ts";
+import { Article } from "@/types/Articles.ts";
+import { getArticles } from "@/utils/getArticles.ts";
 
-type Article = {
-  language: "ja" | "en";
-  category: "engineering" | "philosophy" | "debate" | "thoughts";
-  title: string;
-  link: string;
-  date: Date;
-};
-
-const languageMap = new Map<Article["language"], string>([
-  ["ja", "日本語"],
-  ["en", "English"],
-]);
-
-const categoryMap = new Map<
-  Article["language"],
-  Map<Article["category"], string>
->([
-  [
-    "ja",
-    new Map([
-      ["engineering", "エンジニアリング"],
-      ["debate", "ディベート"],
-      ["philosophy", "思想"],
-      ["thoughts", "雑感"],
-    ]),
-  ],
-  [
-    "en",
-    new Map([
-      ["engineering", "engineering"],
-      ["debate", "debate"],
-      ["philosophy", "philosophy"],
-      ["thoughts", "thoughts"],
-    ]),
-  ],
-]);
-
-export const handler: Handlers<Article[]> = {
+export const handler: Handlers = {
   async GET(_, ctx) {
-    const env = config();
-
-    const articles: Article[] = [];
-
-    const zennResp = await fetch(
-      "https://zenn.dev/api/articles?username=" + env.ZENN_USER_ID +
-        "&count=10&order=latest",
-    );
-
-    if (200 <= zennResp.status && zennResp.status < 300) {
-      const data = await zennResp.json();
-      const zennArticles = data.articles;
-      zennArticles.map((article) =>
-        articles.push({
-          language: "ja",
-          category: "engineering",
-          title: article.title,
-          link: "https://zenn.dev" + article.path,
-          date: new Date(article.published_at),
-        })
-      );
-    }
-
-    const hatenaResp = await fetch(
-      "https://blog.hatena.ne.jp/" + env.HATENA_ID + "/" +
-        "canalundayo.hatenablog.com" + "/atom/entry",
-      {
-        headers: {
-          Authorization: "Basic " +
-            btoa(`${env.HATENA_USER_ID}:${env.HATENA_PASSWORD}`),
-        },
-      },
-    );
-
-    const hatenaRespText = await hatenaResp.text();
-    try {
-      // TODO: ここが 700-800ms かかっているのでキャッシュしたい
-      const parsed = parse(hatenaRespText);
-      parsed.feed.entry.map((entry) => {
-        if (entry["app:control"]["app:draft"] === "no") {
-          articles.push({
-            language: "ja",
-            category: "thoughts",
-            title: entry.title,
-            link: entry.link.find((link) =>
-              link["@rel"] === "alternate"
-            )["@href"],
-            date: new Date(entry.published),
-          });
-        }
-        return;
-      });
-    } catch (ignored) {
-      console.log("couldn't parse hatena response");
-    }
-
-    // MEMO: めったに叩かないわりに 400ms かかるのでキャッシュから取得
-    // const devtoResp = await fetch(
-    //   "https://dev.to/search/feed_content?user_id=" + env.DEVTO_USER_ID +
-    //     "&class_name=Article",
-    // );
-    // const data = await devtoResp.json();
-
-    const devtoResp = await Deno.readTextFile(
-      resolve("../static/devtoCache.json"),
-    );
-    const data = await JSON.parse(devtoResp);
-
-    data.result.map((entry) => {
-      articles.push({
-        language: "en",
-        category: "engineering",
-        title: entry.title,
-        link: "https://dev.to" + entry.path,
-        date: new Date(entry.published_at_int),
-      });
-      return;
-    });
-
-    articles.sort((a, b) => {
-      return b.date.getTime() - a.date.getTime();
-    });
-
+    const articles = await getArticles();
     return ctx.render(articles);
   },
 };
 
-const MAX_LENGTH_OF_TITLE = 25;
-
-export default function Index({ data: articles }: PageProps<Article[] | null>) {
+export default function Index({ data: article }: PageProps<Article[]>) {
   return (
     <>
       <Head>
@@ -186,26 +65,7 @@ export default function Index({ data: articles }: PageProps<Article[] | null>) {
             </ul>
             <h2 id="business">BIG business</h2>
             <h3 id="articles">SUPER articles</h3>
-            {articles
-              ? (
-                <ul>
-                  {articles.map((a) => {
-                    const language = languageMap.get(a.language);
-                    const category = categoryMap.get(a.language)?.get(
-                      a.category,
-                    );
-                    // const title = a.title.slice(0, MAX_LENGTH_OF_TITLE) + "...";
-                    const title = a.title.substring(0, MAX_LENGTH_OF_TITLE) +
-                      (a.title.length > MAX_LENGTH_OF_TITLE ? "..." : "");
-                    return (
-                      <li>
-                        <a href={a.link}>{title}</a>[{language}][{category}]
-                      </li>
-                    );
-                  })}
-                </ul>
-              )
-              : <div>coming soon...</div>}
+            <ReadingList articles={article} />
             <h3 id="musics">SUPER MUSIC</h3>
             <iframe
               width="100%"
