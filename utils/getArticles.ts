@@ -48,8 +48,6 @@ async function getZennArticles(user_id: string): Promise<Article[]> {
         published_at: string | number | Date;
       },
     ) => {
-      console.log(article.published_at);
-      console.log(new Date(article.published_at));
       articles.push({
         language: "ja",
         category: "engineering",

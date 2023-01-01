@@ -3,13 +3,6 @@ import { Article, categoryMap, languageMap } from "@/types/Articles.ts";
 const MAX_LENGTH_OF_TITLE = 25;
 
 export function ArticleList(props: { articles: Article[] }) {
-  const a = props.articles[0];
-  const segmenter = new Intl.Segmenter(a.language, {
-    granularity: "grapheme",
-  });
-  const segment = [...segmenter.segment(a.title)];
-  console.log(segment);
-
   return (
     props.articles
       ? (
