@@ -1,5 +1,5 @@
 import { config } from "dotenv/mod.ts";
-import { parse } from "xml/mod.ts";
+import { $XML, parse } from "xml/mod.ts";
 import { resolvePath } from "@/utils/resolvePath.ts";
 import { Article } from "@/types/Articles.ts";
 
@@ -34,8 +34,14 @@ async function getZennArticles(user_id: string): Promise<Article[]> {
     const data = await zennResp.json();
     const zennArticles = data.articles;
 
-    // TODO: io.ts でランタイム型チェックを入れたい
-    zennArticles.map((article) =>
+    zennArticles.map((
+      // TODO: これは付けているだけなので、io.ts でランタイム型チェックを入れたい
+      article: {
+        title: string;
+        path: string;
+        published_at: string | number | Date;
+      },
+    ) =>
       articles.push({
         language: "ja",
         category: "engineering",
@@ -71,19 +77,34 @@ async function getHatenaArticles(
 
   // TODO: ここが 700-800ms かかっているのでいっそキャッシュしたい
   const parsed = parse(hatenaRespText);
-
-  // TODO: io.ts でランタイム型チェックを入れたい
-  parsed.feed.entry.map((entry) => {
-    if (entry["app:control"]["app:draft"] === "no") {
-      articles.push({
-        language: "ja",
-        category: "thoughts",
-        title: entry.title,
-        link: entry.link.find((link) => link["@rel"] === "alternate")["@href"],
-        date: new Date(entry.published),
-      });
-    }
-  });
+  parsed.feed.entry.map(
+    (
+      // TODO: これは付けているだけなので、io.ts でランタイム型チェックを入れたい
+      entry: {
+        title: string;
+        link: {
+          "@rel": string;
+          "@href": string;
+        }[];
+        published: string;
+        "app:control": {
+          "app:draft": string;
+        };
+      },
+    ) => {
+      if (entry["app:control"]["app:draft"] === "no") {
+        articles.push({
+          language: "ja",
+          category: "thoughts",
+          title: entry.title,
+          link: entry.link.find((link) =>
+            link["@rel"] === "alternate"
+          )?.["@href"] || "",
+          date: new Date(entry.published),
+        });
+      }
+    },
+  );
 
   return articles;
 }
@@ -103,17 +124,25 @@ async function getDevtoArticles(): Promise<Article[]> {
   );
   const data = await JSON.parse(devtoResp);
 
-  // TODO: io.ts でランタイム型チェックを入れたい
-  data.result.map((entry) => {
-    articles.push({
-      language: "en",
-      category: "engineering",
-      title: entry.title,
-      link: "https://dev.to" + entry.path,
-      date: new Date(entry.published_at_int),
-    });
-    return;
-  });
+  data.result.map(
+    (
+      // TODO: これは付けているだけなので、io.ts でランタイム型チェックを入れたい
+      entry: {
+        title: string;
+        path: string;
+        published_at_int: string;
+      },
+    ) => {
+      articles.push({
+        language: "en",
+        category: "engineering",
+        title: entry.title,
+        link: "https://dev.to" + entry.path,
+        date: new Date(entry.published_at_int),
+      });
+      return;
+    },
+  );
 
   return articles;
 }
