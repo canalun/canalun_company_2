@@ -6,6 +6,7 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import { Article } from "@/types/Articles.ts";
 import { getArticles } from "@/utils/getArticles.ts";
 import { EmbeddedSoundCloudPlayer } from "../components/EmbeddedSoundCloudPlayer.tsx";
+import { GameList } from "../components/GameList.tsx";
 
 export const handler: Handlers = {
   async GET(_, ctx) {
@@ -70,26 +71,7 @@ export default function Index({ data: article }: PageProps<Article[]>) {
             <h3 id="musics">SUPER MUSIC</h3>
             <EmbeddedSoundCloudPlayer />
             <h3 id="guest-rooms">SUPER NICE guest rooms</h3>
-            <ul>
-              <li>
-                <a href="/guest_rooms/oshiriGame">
-                  <strong>oshiri katori</strong>
-                </a>: for those who want summer chill feeling...!
-              </li>
-              <li>
-                <a href="/guest_rooms/reverseGame">
-                  <strong>reverse game</strong>
-                </a>: irritating puzzle
-              </li>
-              <li>
-                <a href="./guest_rooms/hotel/index.html">
-                  <strong>hotel</strong>
-                </a>: for those who like riddles…
-                <strong>
-                  <span style="color:red;">[temporary closing]</span>
-                </strong>
-              </li>
-            </ul>
+            <GameList />
             <Dog />
           </div>
         </div>
