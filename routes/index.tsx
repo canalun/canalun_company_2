@@ -5,6 +5,7 @@ import { ArticleList } from "@/components/ArticleList.tsx";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Article } from "@/types/Articles.ts";
 import { getArticles } from "@/utils/getArticles.ts";
+import { EmbeddedSoundCloudPlayer } from "../components/EmbeddedSoundCloudPlayer.tsx";
 
 export const handler: Handlers = {
   async GET(_, ctx) {
@@ -67,14 +68,7 @@ export default function Index({ data: article }: PageProps<Article[]>) {
             <h3 id="articles">SUPER articles</h3>
             <ArticleList articles={article} />
             <h3 id="musics">SUPER MUSIC</h3>
-            <iframe
-              width="100%"
-              height="300"
-              scrolling="no"
-              frameBorder="no"
-              allow="autoplay"
-              src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1547544679&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
-            />
+            <EmbeddedSoundCloudPlayer />
             <h3 id="guest-rooms">SUPER NICE guest rooms</h3>
             <ul>
               <li>
