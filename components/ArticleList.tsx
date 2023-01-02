@@ -1,7 +1,5 @@
 import { Article, categoryMap, languageMap } from "@/types/Articles.ts";
 
-const MAX_LENGTH_OF_TITLE = 25;
-
 export function ArticleList(props: { articles: Article[] }) {
   return (
     props.articles
