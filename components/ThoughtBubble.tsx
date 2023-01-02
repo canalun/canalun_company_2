@@ -4,10 +4,14 @@ type ThoughtBubbleProps = {
   children: ComponentChildren;
   size: { width: string; height: string };
   color: string;
+  direction: "toRight" | "toLeft";
+  rotateOn?: boolean;
 };
 
-// TODO: サイズ計算ロジック修正
-export function ThoughtBubble(props: ThoughtBubbleProps) {
+// TODO: rotateOn のときのサイズ計算ロジック修正。コンポーネント全体の比率を固定しないとだめそう
+export const ThoughtBubble: (props: ThoughtBubbleProps) => JSX.Element = (
+  { children, size, color, direction, rotateOn },
+) => {
   return (
     <>
       <style>
@@ -44,9 +48,10 @@ export function ThoughtBubble(props: ThoughtBubbleProps) {
       </style>
       <div
         style={{
-          width: props.size.width,
-          height: props.size.height,
+          width: size.width,
+          height: size.height,
           display: "flex",
+          flexDirection: direction === "toRight" ? "" : "row-reverse",
           position: "relative",
           margin: "5px",
         }}
@@ -57,7 +62,7 @@ export function ThoughtBubble(props: ThoughtBubbleProps) {
               borderRadius: "100% 100%",
               width: "60%",
               paddingTop: "60%",
-              backgroundColor: props.color,
+              backgroundColor: color,
               position: "relative",
               left: "0%",
               top: "50%",
@@ -71,7 +76,7 @@ export function ThoughtBubble(props: ThoughtBubbleProps) {
               borderRadius: "100% 100%",
               width: "60%",
               paddingTop: "60%",
-              backgroundColor: props.color,
+              backgroundColor: color,
               position: "relative",
               left: "0%",
               top: "60%",
@@ -82,34 +87,34 @@ export function ThoughtBubble(props: ThoughtBubbleProps) {
         <div style={{ width: "70%", height: "100%", position: "relative" }}>
           <div
             style={{
-              borderRadius: "40% 70%/40% 30%",
+              borderRadius: rotateOn ? "40% 80%/60% 30%" : "100%",
               width: "100%",
               height: "100%",
-              backgroundColor: props.color,
+              backgroundColor: color,
               position: "relative",
               zIndex: "-1",
-              animation: "bubbleRotate linear 10s infinite",
+              animation: rotateOn ? "bubbleRotate linear 10s infinite" : "",
             }}
           />
           <div
             id="mainBubble"
             style={{
-              backgroundColor: props.color,
-              width: "70%",
-              height: "50%",
+              backgroundColor: color,
+              width: rotateOn ? "60%" : "70%",
+              height: rotateOn ? "50%" : "60%",
               position: "absolute",
               margin: "auto",
               top: "0",
               left: "0",
               right: "0",
               bottom: "0",
-              overflow: "auto",
+              overflow: "hidden",
             }}
           >
-            {props.children}
+            {children}
           </div>
         </div>
       </div>
     </>
   );
-}
+};
