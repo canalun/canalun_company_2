@@ -126,7 +126,7 @@ async function getDevtoArticles(): Promise<Article[]> {
   // const data = await devtoResp.json();
 
   const devtoResp = await Deno.readTextFile(
-    resolvePath("../static/devtoCache.json"),
+    resolvePath("../static/articleCache/devtoCache.json"),
   );
   const data = await JSON.parse(devtoResp);
 
@@ -157,7 +157,7 @@ async function getOtherArticles(): Promise<Article[]> {
   const articles: Article[] = [];
 
   const otherArticles = await Deno.readTextFile(
-    resolvePath("../static/otherArticlesCache.json"),
+    resolvePath("../static/articleCache/otherArticlesCache.json"),
   );
   const data = await JSON.parse(otherArticles);
 
