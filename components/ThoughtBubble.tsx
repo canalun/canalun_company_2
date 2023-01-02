@@ -48,6 +48,7 @@ export function ThoughtBubble(props: ThoughtBubbleProps) {
           height: props.size.height,
           display: "flex",
           position: "relative",
+          margin: "5px",
         }}
       >
         <div style={{ width: "10%", height: "100%", position: "relative" }}>
@@ -58,7 +59,7 @@ export function ThoughtBubble(props: ThoughtBubbleProps) {
               paddingTop: "60%",
               backgroundColor: props.color,
               position: "relative",
-              left: "50%",
+              left: "0%",
               top: "50%",
               animation: "bubbleDown ease-in 10s infinite",
             }}
@@ -72,7 +73,7 @@ export function ThoughtBubble(props: ThoughtBubbleProps) {
               paddingTop: "60%",
               backgroundColor: props.color,
               position: "relative",
-              left: "30%",
+              left: "0%",
               top: "60%",
               animation: "bubbleUp linear 5s infinite",
             }}
@@ -83,27 +84,26 @@ export function ThoughtBubble(props: ThoughtBubbleProps) {
             style={{
               borderRadius: "40% 70%/40% 30%",
               width: "100%",
-              paddingTop: "100%",
+              height: "100%",
               backgroundColor: props.color,
               position: "relative",
               zIndex: "-1",
-              top: "10%",
-              left: "5%",
               animation: "bubbleRotate linear 10s infinite",
             }}
           />
           <div
+            id="mainBubble"
             style={{
+              backgroundColor: props.color,
+              width: "70%",
+              height: "50%",
               position: "absolute",
               margin: "auto",
-              top: "80%",
+              top: "0",
               left: "0",
               right: "0",
               bottom: "0",
-              height: "80%",
-              width: "60%",
-              overflowX: "auto",
-              overflowY: "auto",
+              overflow: "auto",
             }}
           >
             {props.children}
