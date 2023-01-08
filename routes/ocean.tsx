@@ -6,6 +6,7 @@ import { EmbeddedSoundCloudPlayer } from "@/components/EmbeddedSoundCloudPlayer.
 import { GameList } from "@/components/GameList.tsx";
 import { Article } from "@/types/Articles.ts";
 import { getArticles } from "@/utils/getArticles.ts";
+import { ScrollableContainer } from "../components/ScrollableContainer.tsx";
 
 export const handler: Handlers = {
   async GET(_, ctx) {
@@ -71,7 +72,20 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
           .background {
             z-index: -1000;
             position: relative;
-          }`}
+          }
+          @font-face{
+            font-family: 'DolphinOceanWave';
+            src: url('/font/DolphinOceanWave.woff') format('woff');
+          }
+          h3 {
+            font-family: DolphinOceanWave;
+            color: black;
+            font-size: 65px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            text-indent: 0.1em;
+          }
+          `}
       </style>
       <body
         style={{
@@ -106,12 +120,12 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
           <p
             style={{
               //fontFamily: "Sacramento, cursive",
-              fontFamily: "Comic Sans MS",
-              textShadow: "4px 0px 0px white",
+              fontFamily: "DolphinOceanWave",
+              textShadow: "8px 0px 0px white",
               fontSize: "min(15vw, 15vh, 90px)",
               //fontStyle: "italic",
               fontWeight: "bold",
-              "-webkit-text-stroke": "2px #70D0FF",
+              "-webkit-text-stroke": "2px #147ce1",
               color: "transparent",
               letterSpacing: "0.06em",
               position: "absolute",
@@ -154,7 +168,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
             id="ocean-layer"
             style={{
               width: "100%",
-              height: "650px",
+              height: "60vh",
               position: "relative",
               display: "flex",
               padding: "2px",
@@ -169,7 +183,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
               }}
             >
               <img
-                src="/ocean/tako.png"
+                src="/ocean/img/tako.png"
                 style={{
                   height: "180px",
                   width: "auto",
@@ -193,9 +207,9 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
                 direction="toRight"
               >
                 <h3>Readings...</h3>
-                <div style={{ overflow: "auto", height: "100%" }}>
-                  <ArticleList articles={article}></ArticleList>
-                </div>
+                <ScrollableContainer scrollBarColor="#147ce1">
+                  <ArticleList articles={article} fontSize="18px" />
+                </ScrollableContainer>
               </ThoughtBubble>
             </div>
           </div>
@@ -234,7 +248,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
               }}
             >
               <img
-                src="/ocean/ammonite.png"
+                src="/ocean/img/ammonite.png"
                 style={{
                   height: "180px",
                   width: "auto",
@@ -266,7 +280,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
               }}
             >
               <img
-                src="/ocean/submarine.png"
+                src="/ocean/img/submarine.png"
                 style={{
                   height: "180px",
                   width: "auto",
@@ -290,7 +304,9 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
                 direction="toRight"
               >
                 <h3>Playings...</h3>
-                <GameList />
+                <ScrollableContainer scrollBarColor="#147ce1">
+                  <GameList fontSize="18px" />
+                </ScrollableContainer>
               </ThoughtBubble>
             </div>
           </div>
