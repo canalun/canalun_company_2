@@ -7,6 +7,7 @@ export function ArticleList(props: { articles: Article[] }) {
         <ul
           style={{
             "padding-left": "0",
+            "margin-top": "0",
           }}
         >
           {props.articles.map((a) => {
