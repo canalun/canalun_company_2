@@ -1,13 +1,14 @@
 import { Article, categoryMap, languageMap } from "@/types/Articles.ts";
 
-export function ArticleList(props: { articles: Article[] }) {
+export function ArticleList(props: { articles: Article[]; fontSize: string }) {
   return (
     props.articles
       ? (
         <ul
           style={{
-            "padding-left": "0",
-            "margin-top": "0",
+            paddingLeft: "0",
+            marginTop: "0",
+            fontSize: `${props.fontSize}`,
           }}
         >
           {props.articles.map((a) => {

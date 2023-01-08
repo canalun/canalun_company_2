@@ -1,6 +1,12 @@
-export function GameList() {
+export function GameList(props: { fontSize: string }) {
   return (
-    <ul>
+    <ul
+      style={{
+        paddingLeft: "0",
+        marginTop: "0",
+        fontSize: `${props.fontSize}`,
+      }}
+    >
       <li>
         <a href="/guest_rooms/oshiriGame">
           <strong>oshiri katori</strong>
