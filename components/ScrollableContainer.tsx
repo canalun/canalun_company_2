@@ -1,5 +1,6 @@
 import { ComponentChild } from "preact/src/index.d.ts";
 import { OceanPalette } from "@/theme/palette.ts";
+import { generateRandomString } from "../utils/generateRandomString.ts";
 
 type ScrollableContainerProps = {
   scrollBarColor: string;
@@ -7,8 +8,7 @@ type ScrollableContainerProps = {
 };
 
 export function ScrollableContainer(props: ScrollableContainerProps) {
-  const className = Math.random().toString(32).substring(2);
-  // random string generator : https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript/8084248#8084248
+  const className = generateRandomString();
   return (
     <>
       <style>
