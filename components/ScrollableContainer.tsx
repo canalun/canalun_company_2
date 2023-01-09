@@ -1,4 +1,5 @@
 import { ComponentChild } from "https://esm.sh/v99/preact@10.11.0/src/index.d.ts";
+import { OceanPalette } from "../theme/palette.ts";
 
 type ScrollableContainerProps = {
   scrollBarColor: string;
@@ -6,28 +7,30 @@ type ScrollableContainerProps = {
 };
 
 export function ScrollableContainer(props: ScrollableContainerProps) {
+  const className = Math.random().toString(32).substring(2);
+  // random string generator : https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript/8084248#8084248
   return (
     <>
       <style>
         {`
           /*スクロールバーの横幅指定*/
-          .scrollable::-webkit-scrollbar {
+          .${className}::-webkit-scrollbar {
               width: 8px;
           }
           /*スクロールバーの背景色・角丸指定*/
-          .scrollable::-webkit-scrollbar-track {
+          .${className}::-webkit-scrollbar-track {
             border-radius: 10px;
-            background: #f2f2f2;
+            background: ${OceanPalette.white.basic};
           }
           /*スクロールバーの色・角丸指定*/
-          .scrollable::-webkit-scrollbar-thumb {
+          .${className}::-webkit-scrollbar-thumb {
             border-radius: 10px;
             background:${props.scrollBarColor};
           }
           `}
       </style>
       <div
-        className="scrollable"
+        className={className}
         style={{ overflow: "auto", height: "100%" }}
       >
         {props.children}

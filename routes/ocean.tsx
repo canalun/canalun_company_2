@@ -7,6 +7,7 @@ import { GameList } from "@/components/GameList.tsx";
 import { Article } from "@/types/Articles.ts";
 import { getArticles } from "@/utils/getArticles.ts";
 import { ScrollableContainer } from "../components/ScrollableContainer.tsx";
+import { OceanPalette } from "../theme/palette.ts";
 
 export const handler: Handlers = {
   async GET(_, ctx) {
@@ -99,7 +100,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
           id="sky"
           class="background"
           style={{
-            backgroundColor: "#70D0FF",
+            backgroundColor: OceanPalette.blue.sky,
             width: "100vw",
             height: "70vh",
             position: "relative",
@@ -125,7 +126,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
               fontSize: "min(15vw, 15vh, 90px)",
               //fontStyle: "italic",
               fontWeight: "bold",
-              "-webkit-text-stroke": "2px #147ce1",
+              "-webkit-text-stroke": `2px ${OceanPalette.blue.sea}`,
               color: "transparent",
               letterSpacing: "0.06em",
               position: "absolute",
@@ -140,7 +141,10 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
         <div
           id="wave"
           class="background"
-          style={{ overflow: "hidden", backgroundColor: "#147CE1" }}
+          style={{
+            overflow: "hidden",
+            backgroundColor: `${OceanPalette.blue.sea}`,
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +153,10 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
             height="300"
           >
             <path
-              style={{ fill: "#70D0FF", animation: "wave linear 10s infinite" }}
+              style={{
+                fill: `${OceanPalette.blue.sky}`,
+                animation: "wave linear 10s infinite",
+              }}
               d="M 0,0 v 100,0 q 150,50 300,0 t 300,0 q 150,50 300,0 t 300, 0 q 150,50 300,0 t 300,0 q 150,50 300,0 t 300,0 q 150,50 300,0 t 300,0 q 150,50 300,0 t 300,0 q 150,50 300,0 t 300,0 q 150,50 300,0 v 0,-100 Z"
             />
           </svg>
@@ -158,7 +165,8 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
           id="ocean"
           class="background"
           style={{
-            background: "linear-gradient(#147CE1, #0c3689 )",
+            background:
+              `linear-gradient(${OceanPalette.blue.sea}, ${OceanPalette.blue.deepSea})`,
             width: "100%",
             position: "relative",
             overflow: "hidden",
@@ -207,7 +215,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
                 direction="toRight"
               >
                 <h3>Readings...</h3>
-                <ScrollableContainer scrollBarColor="#147ce1">
+                <ScrollableContainer scrollBarColor={OceanPalette.blue.sea}>
                   <ArticleList articles={article} fontSize="18px" />
                 </ScrollableContainer>
               </ThoughtBubble>
@@ -304,7 +312,9 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
                 direction="toRight"
               >
                 <h3>Playings...</h3>
-                <ScrollableContainer scrollBarColor="#147ce1">
+                <ScrollableContainer
+                  scrollBarColor={OceanPalette.blue.deepSea}
+                >
                   <GameList fontSize="18px" />
                 </ScrollableContainer>
               </ThoughtBubble>
@@ -312,7 +322,11 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
           </div>
         </div>
         <div
-          style={{ backgroundColor: "#412202", width: "100%", height: "100px" }}
+          style={{
+            backgroundColor: OceanPalette.brown.bottomOfTheSea,
+            width: "100%",
+            height: "100px",
+          }}
         />
       </body>
     </>
