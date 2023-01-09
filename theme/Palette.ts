@@ -6,7 +6,7 @@ export const OceanPalette = {
     "deepSea": "#001745",
   },
   "green": {
-    "mid": "#8EBF45",
+    "mid": "#4fa825",
     "thick": "#477327",
   },
   "brown": {

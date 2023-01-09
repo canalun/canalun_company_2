@@ -1,30 +1,31 @@
 import { config } from "dotenv/mod.ts";
-import { $XML, parse } from "xml/mod.ts";
+import { parse } from "xml/mod.ts";
 import { resolvePath } from "@/utils/resolvePath.ts";
-import { Article } from "@/types/Articles.ts";
+import { Article, Category } from "@/types/Articles.ts";
 
 export async function getArticles(): Promise<Article[]> {
   const env = config();
 
-  const zennArticles = await getZennArticles(env.ZENN_USER_ID);
-  const hatenaArticles = await getHatenaArticles(
+  const zennArticles = getZennArticles(env.ZENN_USER_ID);
+  const hatenaArticles = getHatenaArticles(
     env.HATENA_ID,
     env.HATENA_USER_ID,
     env.HATENA_PASSWORD,
   );
-  const devtoArticles = await getDevtoArticles();
-  const otherArticles = await getOtherArticles();
+  const devtoArticles = getDevtoArticles();
+  const otherArticles = getOtherArticles();
 
-  const articles = [
-    ...zennArticles,
-    ...hatenaArticles,
-    ...devtoArticles,
-    ...otherArticles,
-  ];
+  const result = await Promise.all([
+    zennArticles,
+    hatenaArticles,
+    devtoArticles,
+    otherArticles,
+  ]);
+
+  const articles: Article[] = result.flatMap((article) => article);
   articles.sort((a, b) => {
     return b.date.getTime() - a.date.getTime();
   });
-
   return articles;
 }
 
@@ -50,7 +51,7 @@ async function getZennArticles(user_id: string): Promise<Article[]> {
     ) => {
       articles.push({
         language: "ja",
-        category: "engineering",
+        category: [...setCategory(article.title), "engineering"],
         title: article.title,
         link: "https://zenn.dev" + article.path,
         date: new Date(article.published_at),
@@ -101,7 +102,7 @@ async function getHatenaArticles(
       if (entry["app:control"]["app:draft"] === "no") {
         articles.push({
           language: "ja",
-          category: "thoughts",
+          category: [...setCategory(entry.title), "thoughts"],
           title: entry.title,
           link: entry.link.find((link) =>
             link["@rel"] === "alternate"
@@ -141,7 +142,7 @@ async function getDevtoArticles(): Promise<Article[]> {
     ) => {
       articles.push({
         language: "en",
-        category: "engineering",
+        category: [...setCategory(entry.title), "engineering"],
         title: entry.title,
         link: "https://dev.to" + entry.path,
         date: new Date(entry.readable_publish_date),
@@ -172,7 +173,7 @@ async function getOtherArticles(): Promise<Article[]> {
     ) => {
       articles.push({
         language: "ja",
-        category: "engineering",
+        category: [...setCategory(entry.title), "engineering"],
         title: entry.title,
         link: entry.path,
         date: new Date(entry.published_at),
@@ -182,4 +183,18 @@ async function getOtherArticles(): Promise<Article[]> {
   );
 
   return articles;
+}
+
+function setCategory(title: string): Category[] {
+  const category: Category[] = title.includes("Type") || title.includes("type")
+    ? ["typescript"]
+    : title.includes("js") || title.includes("javascript")
+    ? ["javascript"]
+    : title.includes("MySQL") || title.includes("Go") || title.includes("go")
+    ? ["serverside"]
+    : title.includes("クリティーク") || title.includes("JDA") ||
+        title.includes("ディベート")
+    ? ["debate"]
+    : [];
+  return category;
 }
