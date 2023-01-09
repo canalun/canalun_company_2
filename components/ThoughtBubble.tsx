@@ -86,6 +86,7 @@ export const ThoughtBubble: (props: ThoughtBubbleProps) => JSX.Element = (
         </div>
         <div style={{ width: "70%", height: "100%", position: "relative" }}>
           <div
+            id="mainBubble"
             style={{
               borderRadius: rotateOn ? "40% 80%/60% 30%" : "100%",
               width: "100%",
@@ -97,11 +98,10 @@ export const ThoughtBubble: (props: ThoughtBubbleProps) => JSX.Element = (
             }}
           />
           <div
-            id="mainBubble"
             style={{
               backgroundColor: color,
               width: rotateOn ? "60%" : "70%",
-              height: rotateOn ? "50%" : "60%",
+              height: rotateOn ? "50%" : "70%",
               position: "absolute",
               margin: "auto",
               top: "0",

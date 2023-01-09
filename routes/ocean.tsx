@@ -18,6 +18,7 @@ export const handler: Handlers = {
 
 // MEMO: レスポンシブ対応は基本的に各スタイル中で min, max を多用して対応している。どうしてもそれでは無理だった吹き出しは、コンテナクエリで対応
 export default function Ocean({ data: article }: PageProps<Article[]>) {
+  const h3fontSize = "60px";
   return (
     <>
       <Head>
@@ -81,7 +82,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
           h3 {
             font-family: DolphinOceanWave;
             color: black;
-            font-size: 65px;
+            font-size: ${h3fontSize};
             margin-top: 0px;
             margin-bottom: 0px;
             text-indent: 0.1em;
@@ -215,9 +216,12 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
                 direction="toRight"
               >
                 <h3>Readings...</h3>
-                <ScrollableContainer scrollBarColor={OceanPalette.blue.sea}>
-                  <ArticleList articles={article} fontSize="18px" />
-                </ScrollableContainer>
+                <div style={{ height: `calc(95% - ${h3fontSize} - 10px)` }}>
+                  {/* h3のサイズをひいてあげて、余白いっぱいにコンテンツを配置: https://zenn.dev/orihika0123/articles/2022-05-04-nyarome-flexbox-width#%E6%AD%A3%E3%81%97%E3%81%84%E6%9B%B8%E3%81%8D%E6%96%B9%E3%81%9D%E3%81%AE1(calc%E3%82%92%E4%BD%BF%E3%81%86)*/}
+                  <ScrollableContainer scrollBarColor={OceanPalette.blue.sea}>
+                    <ArticleList articles={article} fontSize="18px" />
+                  </ScrollableContainer>
+                </div>
               </ThoughtBubble>
             </div>
           </div>
@@ -225,7 +229,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
             id="ocean-layer"
             style={{
               width: "100%",
-              height: "650px",
+              height: "60vh",
               position: "relative",
               display: "flex",
               padding: "2px",
@@ -273,7 +277,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
             id="ocean-layer"
             style={{
               width: "100%",
-              height: "650px",
+              height: "60vh",
               position: "relative",
               display: "flex",
               padding: "2px",
@@ -312,11 +316,13 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
                 direction="toRight"
               >
                 <h3>Playings...</h3>
-                <ScrollableContainer
-                  scrollBarColor={OceanPalette.blue.deepSea}
-                >
-                  <GameList fontSize="18px" />
-                </ScrollableContainer>
+                <div style={{ height: `calc(95% - ${h3fontSize} - 10px)` }}>
+                  <ScrollableContainer
+                    scrollBarColor={OceanPalette.blue.deepSea}
+                  >
+                    <GameList fontSize="18px" />
+                  </ScrollableContainer>
+                </div>
               </ThoughtBubble>
             </div>
           </div>
