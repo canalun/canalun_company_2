@@ -1,5 +1,5 @@
-import { ComponentChild } from "https://esm.sh/v99/preact@10.11.0/src/index.d.ts";
-import { OceanPalette } from "../theme/palette.ts";
+import { ComponentChild } from "preact/src/index.d.ts";
+import { OceanPalette } from "@/theme/palette.ts";
 
 type ScrollableContainerProps = {
   scrollBarColor: string;
