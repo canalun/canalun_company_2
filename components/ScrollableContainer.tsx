@@ -1,10 +1,10 @@
-import { ComponentChild } from "preact/src/index.d.ts";
 import { OceanPalette } from "@/theme/palette.ts";
-import { generateRandomString } from "../utils/generateRandomString.ts";
+import { generateRandomString } from "@/utils/generateRandomString.ts";
+import { ComponentChildren } from "https://esm.sh/v99/preact@10.11.0/src/index.d.ts";
 
 type ScrollableContainerProps = {
   scrollBarColor: string;
-  children: ComponentChild;
+  children: ComponentChildren;
 };
 
 export function ScrollableContainer(props: ScrollableContainerProps) {
