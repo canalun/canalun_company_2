@@ -73,6 +73,7 @@ export function ArticleList(props: { articles: Article[]; fontSize: string }) {
                               tagColor[category]["backgroundColor"],
                             color: tagColor[category]["fontColor"],
                             fontSize: "14px",
+                            display: "inline-block",
                           }}
                         >
                           #{categoryMap.get(a.language)?.get(category)}
@@ -87,6 +88,7 @@ export function ArticleList(props: { articles: Article[]; fontSize: string }) {
                         backgroundColor: OceanPalette.green.mid,
                         color: "white",
                         fontSize: "14px",
+                        display: "inline-block",
                       }}
                     >
                       #{languageMap.get(a.language)}
