@@ -9,6 +9,7 @@ import { getArticles } from "@/utils/getArticles.ts";
 import { ScrollableContainer } from "../components/ScrollableContainer.tsx";
 import { OceanPalette } from "../theme/palette.ts";
 import { OceanLayer } from "../components/Ocean.tsx";
+import OceanLogo from "../islands/OceanLogo.tsx";
 
 export const handler: Handlers = {
   async GET(_, ctx) {
@@ -120,25 +121,16 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
               borderRadius: "100%",
             }}
           />
-          <p
+          <div
             style={{
-              //fontFamily: "Sacramento, cursive",
-              fontFamily: "DolphinOceanWave",
-              textShadow: "min(1.5vw, 1.5vh, 9px) 0px 0px white",
-              fontSize: "min(20vw, 20vh, 90px)",
-              //fontStyle: "italic",
-              fontWeight: "bold",
-              "-webkit-text-stroke": `2px ${OceanPalette.blue.sea}`,
-              color: "transparent",
-              letterSpacing: "0.06em",
               position: "absolute",
-              top: "50%",
+              top: "60%", // 海との境目が波がある分ずれているので、50%ではない方がいい感じになる
               left: "50%",
               transform: "translate(-50%, -50%)",
             }}
           >
-            Canalun<br />Company
-          </p>
+            <OceanLogo />
+          </div>
         </div>
         <div
           id="wave"
