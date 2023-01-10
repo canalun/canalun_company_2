@@ -8,6 +8,7 @@ import { Article } from "@/types/Articles.ts";
 import { getArticles } from "@/utils/getArticles.ts";
 import { ScrollableContainer } from "../components/ScrollableContainer.tsx";
 import { OceanPalette } from "../theme/palette.ts";
+import { OceanLayer } from "../components/Ocean.tsx";
 
 export const handler: Handlers = {
   async GET(_, ctx) {
@@ -18,7 +19,7 @@ export const handler: Handlers = {
 
 // MEMO: レスポンシブ対応は基本的に各スタイル中で min, max を多用して対応している。どうしてもそれでは無理だった吹き出しは、コンテナクエリで対応
 export default function Ocean({ data: article }: PageProps<Article[]>) {
-  const h3fontSize = "60px";
+  const h3fontSize = "min(15vw, 15vh, 60px)";
   return (
     <>
       <Head>
@@ -123,8 +124,8 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
             style={{
               //fontFamily: "Sacramento, cursive",
               fontFamily: "DolphinOceanWave",
-              textShadow: "8px 0px 0px white",
-              fontSize: "min(15vw, 15vh, 90px)",
+              textShadow: "min(1.5vw, 1.5vh, 9px) 0px 0px white",
+              fontSize: "min(20vw, 20vh, 90px)",
               //fontStyle: "italic",
               fontWeight: "bold",
               "-webkit-text-stroke": `2px ${OceanPalette.blue.sea}`,
@@ -171,45 +172,43 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
             width: "100%",
             position: "relative",
             overflow: "hidden",
+            containerType: "inline-size",
           }}
         >
-          <div
-            id="ocean-layer"
-            style={{
-              width: "100%",
-              height: "60vh",
-              position: "relative",
-              display: "flex",
-              padding: "2px",
-              marginBottom: "150px",
-            }}
-          >
-            <div
-              style={{
-                width: "15%",
-                height: "100%",
-                position: "relative",
-              }}
-            >
-              <img
-                src="/ocean/img/tako.png"
-                style={{
-                  height: "180px",
-                  width: "auto",
-                  position: "relative",
-                  top: "60px",
-                  left: "20px",
-                  animation: "tako linear 5s infinite",
-                }}
-              />
-            </div>
-            <div
-              style={{
-                width: "85%",
-                height: "100%",
-                position: "relative",
-              }}
-            >
+          <OceanLayer
+            ratio={["15%", "85%"]}
+            direction={"toRight"}
+            childrenList={[
+              <>
+                <style>
+                  {`
+                  @container(min-width:801px){
+                    .tako {
+                      height: 20vh;
+                      width: auto;
+                      top: 60px;
+                      left: 20px;
+                    }
+                  }
+                  @container(max-width:800px){
+                    .tako {
+                      height: 100%;
+                      width: auto;
+                      top: 15%;
+                      left: 5vw;
+                    }
+                  }
+                `}
+                </style>
+                <img
+                  className="tako"
+                  src="/ocean/img/tako.png"
+                  style={{
+                    position: "relative",
+                    animation: "tako linear 5s infinite",
+                  }}
+                />
+              </>,
               <ThoughtBubble
                 color="white"
                 size={{ width: "100%", height: "100%" }}
@@ -222,27 +221,44 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
                     <ArticleList articles={article} fontSize="18px" />
                   </ScrollableContainer>
                 </div>
-              </ThoughtBubble>
-            </div>
-          </div>
-          <div
-            id="ocean-layer"
-            style={{
-              width: "100%",
-              height: "60vh",
-              position: "relative",
-              display: "flex",
-              padding: "2px",
-              marginBottom: "150px",
-            }}
-          >
-            <div
-              style={{
-                width: "85%",
-                height: "100%",
-                position: "relative",
-              }}
-            >
+              </ThoughtBubble>,
+            ]}
+          />
+          <OceanLayer
+            ratio={["15%", "85%"]}
+            direction={"toLeft"}
+            childrenList={[
+              <>
+                <style>
+                  {`
+                  @container(min-width:801px){
+                    .ammonite {
+                      height: 20vh;
+                      width: auto;
+                      top: 60px;
+                      left: 20px;
+                    }
+                  }
+                  @container(max-width:800px){
+                    .ammonite {
+                      height: 100%;
+                      width: auto;
+                      top: 15%;
+                      left: 5vw;
+                    }
+                  }
+                `}
+                </style>
+                <img
+                  src="/ocean/img/ammonite.png"
+                  className="ammonite"
+                  style={{
+                    position: "relative",
+                    animation:
+                      "ammonite cubic-bezier(0.985, 0.035, 0.480, 0.975) 5s infinite",
+                  }}
+                />
+              </>,
               <ThoughtBubble
                 color="white"
                 size={{ width: "100%", height: "100%" }}
@@ -250,66 +266,43 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
               >
                 <h3>Listenings...</h3>
                 <EmbeddedSoundCloudPlayer />
-              </ThoughtBubble>
-            </div>
-            <div
-              style={{
-                width: "15%",
-                height: "100%",
-                position: "relative",
-              }}
-            >
-              <img
-                src="/ocean/img/ammonite.png"
-                style={{
-                  height: "180px",
-                  width: "auto",
-                  position: "relative",
-                  top: "70px",
-                  left: "-20px",
-                  animation:
-                    "ammonite cubic-bezier(0.985, 0.035, 0.480, 0.975) 5s infinite",
-                }}
-              />
-            </div>
-          </div>
-          <div
-            id="ocean-layer"
-            style={{
-              width: "100%",
-              height: "60vh",
-              position: "relative",
-              display: "flex",
-              padding: "2px",
-              marginBottom: "150px",
-            }}
-          >
-            <div
-              style={{
-                width: "15%",
-                height: "100%",
-                position: "relative",
-              }}
-            >
-              <img
-                src="/ocean/img/submarine.png"
-                style={{
-                  height: "180px",
-                  width: "auto",
-                  position: "relative",
-                  top: "150px",
-                  left: "0px",
-                  animation: "submarine linear 5s infinite",
-                }}
-              />
-            </div>
-            <div
-              style={{
-                width: "85%",
-                height: "100%",
-                position: "relative",
-              }}
-            >
+              </ThoughtBubble>,
+            ]}
+          />
+          <OceanLayer
+            ratio={["15%", "85%"]}
+            direction={"toRight"}
+            childrenList={[
+              <>
+                <style>
+                  {`
+                  @container(min-width:801px){
+                    .submarine {
+                      height: 20vh;
+                      width: auto;
+                      top: 60px;
+                      left: 20px;
+                    }
+                  }
+                  @container(max-width:800px){
+                    .submarine {
+                      height: 100%;
+                      width: auto;
+                      top: 15%;
+                      left: 10vw;
+                    }
+                  }
+                `}
+                </style>
+                <img
+                  className="submarine"
+                  src="/ocean/img/submarine.png"
+                  style={{
+                    position: "relative",
+                    animation: "submarine linear 5s infinite",
+                  }}
+                />
+              </>,
               <ThoughtBubble
                 color="white"
                 size={{ width: "100%", height: "100%" }}
@@ -323,9 +316,9 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
                     <GameList fontSize="18px" />
                   </ScrollableContainer>
                 </div>
-              </ThoughtBubble>
-            </div>
-          </div>
+              </ThoughtBubble>,
+            ]}
+          />
         </div>
         <div
           style={{
