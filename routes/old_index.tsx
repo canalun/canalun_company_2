@@ -67,11 +67,11 @@ export default function Index({ data: article }: PageProps<Article[]>) {
             </ul>
             <h2 id="business">BIG business</h2>
             <h3 id="articles">SUPER articles</h3>
-            <ArticleList articles={article} />
+            <ArticleList articles={article} fontSize="16px" />
             <h3 id="musics">SUPER MUSIC</h3>
             <EmbeddedSoundCloudPlayer />
             <h3 id="guest-rooms">SUPER NICE guest rooms</h3>
-            <GameList />
+            <GameList fontSize="16px" />
             <Dog />
           </div>
         </div>
