@@ -188,7 +188,8 @@ async function getOtherArticles(): Promise<Article[]> {
 function setCategory(title: string): Category[] {
   const category: Category[] = title.includes("Type") || title.includes("type")
     ? ["typescript"]
-    : title.includes("js") || title.includes("javascript")
+    : title.includes("js") || title.includes("javascript") ||
+        title.includes("イベントループ")
     ? ["javascript"]
     : title.includes("MySQL") || title.includes("Go") || title.includes("go")
     ? ["serverside"]
