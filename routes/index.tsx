@@ -1,7 +1,7 @@
 import { Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { ArticleList } from "@/components/ArticleList.tsx";
-import { ThoughtBubble } from "@/components/thoughtBubble.tsx";
+import { ThoughtBubble } from "@/components/ThoughtBubble.tsx";
 import { EmbeddedSoundCloudPlayer } from "@/components/EmbeddedSoundCloudPlayer.tsx";
 import { GameList } from "@/components/GameList.tsx";
 import { Article } from "@/types/Articles.ts";

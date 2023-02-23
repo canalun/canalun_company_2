@@ -7,7 +7,7 @@ type OceanLayerProps = {
   direction: "toRight" | "toLeft";
 };
 
-// TODO: thoughtBubbleとあわせて一つのコンポーネントにしたほうがよさそう
+// TODO: ThoughtBubbleとあわせて一つのコンポーネントにしたほうがよさそう
 export function OceanLayer(props: OceanLayerProps) {
   const className = generateRandomString();
   return (
