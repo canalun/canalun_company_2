@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import { OceanPalette } from "../theme/palette.ts";
+import { OceanPalette } from "../theme/Palette.ts";
 
 // TODO: ロゴの何か面白い仕掛けを考える
 export default function OceanLogo() {

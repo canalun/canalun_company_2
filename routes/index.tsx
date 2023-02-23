@@ -7,7 +7,7 @@ import { GameList } from "@/components/GameList.tsx";
 import { Article } from "@/types/Articles.ts";
 import { getArticles } from "@/utils/getArticles.ts";
 import { ScrollableContainer } from "../components/ScrollableContainer.tsx";
-import { OceanPalette } from "../theme/palette.ts";
+import { OceanPalette } from "../theme/Palette.ts";
 import { OceanLayer } from "../components/Ocean.tsx";
 import OceanLogo from "../islands/OceanLogo.tsx";
 

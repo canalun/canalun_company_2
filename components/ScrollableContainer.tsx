@@ -1,4 +1,4 @@
-import { OceanPalette } from "@/theme/palette.ts";
+import { OceanPalette } from "@/theme/Palette.ts";
 import { generateRandomString } from "@/utils/generateRandomString.ts";
 import { ComponentChildren } from "https://esm.sh/v99/preact@10.11.0/src/index.d.ts";
 

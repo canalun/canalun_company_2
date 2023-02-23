@@ -4,7 +4,7 @@ import {
   categoryMap,
   languageMap,
 } from "@/types/Articles.ts";
-import { OceanPalette } from "@/theme/palette.ts";
+import { OceanPalette } from "@/theme/Palette.ts";
 
 export function ArticleList(props: { articles: Article[]; fontSize: string }) {
   const tagColor: {
