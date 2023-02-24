@@ -1,10 +1,10 @@
-import { config } from "dotenv/mod.ts";
+import { load } from "https://deno.land/std@0.178.0/dotenv/mod.ts";
 import { parse } from "xml/mod.ts";
 import { resolvePath } from "@/utils/resolvePath.ts";
 import { Article, Category } from "@/types/Articles.ts";
 
 export async function getArticles(): Promise<Article[]> {
-  const env = config();
+  const env = await load();
 
   const zennArticles = getZennArticles(env.ZENN_USER_ID);
   const hatenaArticles = getHatenaArticles(
@@ -84,6 +84,7 @@ async function getHatenaArticles(
 
   // TODO: ここが 700-800ms かかっているのでいっそキャッシュしたい
   const parsed = parse(hatenaRespText);
+
   parsed.feed.entry.map(
     (
       // TODO: これは付けているだけなので、io.ts でランタイム型チェックを入れたい
