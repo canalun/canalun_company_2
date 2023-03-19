@@ -1,9 +1,13 @@
 import { parse } from "xml/mod.ts";
 import { resolvePath } from "@/utils/resolvePath.ts";
 import { Article, Category } from "@/types/Articles.ts";
+import { load } from "https://deno.land/std@0.178.0/dotenv/mod.ts";
 
 export async function getArticles(): Promise<Article[]> {
-  const env = Deno.env.toObject();
+  let env = Deno.env.toObject();
+  if (env.ZENN_USER_ID === undefined) {
+    env = await load();
+  }
 
   const zennArticles = getZennArticles(env.ZENN_USER_ID);
   const hatenaArticles = getHatenaArticles(
