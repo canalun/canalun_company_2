@@ -46,15 +46,11 @@ function removeRealBlockAndUpdateBlocksPosition(
   block: RealBlock,
   blocks: Block[],
 ) {
-  assert(
-    "style" in block.element &&
-      block.element.style instanceof CSSStyleDeclaration,
-    "unexpected block.element.style",
-  );
   const originalBorderWidth =
     getComputedStyleUsingCache(block.element).borderWidth;
-  block.element.style.border = "1px solid red";
-  block.element.style.borderWidth = originalBorderWidth;
+  const element = block.element as HTMLElement; // TODO: remove type assertion
+  element.style.border = "1px solid red";
+  element.style.borderWidth = originalBorderWidth;
 
   setTimeout(() => {
     // if (
