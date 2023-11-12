@@ -1,6 +1,7 @@
 import {
   type Block,
   getComputedStyleUsingCache,
+  getRectOfRealBlock,
   isRealBlock,
   type RealBlock,
   type VirtualBlock,
@@ -140,13 +141,7 @@ function updatePositionOfBlocksByRealBlockRemoval(blocks: Block[]) {
       return;
     }
     if (isRealBlock(block)) {
-      const _rect = block.element.getBoundingClientRect();
-      const rect = {
-        top: globalThis.innerHeight - _rect.top,
-        bottom: globalThis.innerHeight - _rect.bottom,
-        left: _rect.left,
-        right: _rect.right,
-      };
+      const rect = getRectOfRealBlock(block.element);
       Object.assign(block, { rect });
     } else {
       // MEMO: 問題が起きたらキャッシュをやめるが、時間がかかっていたのでキャッシュにする

@@ -116,7 +116,13 @@ export function getBlockElements(): Element[] {
   const canBeBlock = (el: Element) => {
     return isVisible(el) && !isTiny(el);
   };
-  collectBlockElements(document.body, canBeBlock, false, blockElements);
+  collectBlockElements(
+    document.documentElement,
+    canBeBlock,
+    false,
+    blockElements,
+  );
+  console.log(blockElements);
   return blockElements;
 }
 
@@ -149,23 +155,47 @@ export function convertBlockInfoToVirtualBlock(
 }
 
 function convertElementToRealBlock(element: Element): RealBlock {
-  const _rect = element.getBoundingClientRect();
+  return {
+    uuid: uuid.v1.generate().toString(),
+    element,
+    rect: getRectOfRealBlock(element),
+    remain: true,
+  };
+}
+
+export function getRectOfRealBlock(element: Element) {
+  const __rect = element.getBoundingClientRect();
+  const _rect = {
+    top: __rect.top,
+    bottom: __rect.bottom,
+    left: __rect.left,
+    right: __rect.right,
+  };
+
+  // iframeの場合は位置を調整する
+  // TODO: 多段iframe対応
+  if (element.ownerDocument !== globalThis.document) {
+    const _srcFrameRect = element.ownerDocument.defaultView?.frameElement
+      ?.getBoundingClientRect();
+    if (!_srcFrameRect) {
+      throw new Error("srcFrameRect not found");
+    }
+    _rect.top += _srcFrameRect.top;
+    _rect.bottom += _srcFrameRect.top;
+    _rect.left += _srcFrameRect.left;
+    _rect.right += _srcFrameRect.left;
+  }
+
   const rect = {
     top: globalThis.innerHeight - _rect.top,
     bottom: globalThis.innerHeight - _rect.bottom,
     left: _rect.left,
     right: _rect.right,
   };
-  const _uuid = uuid.v1.generate().toString();
-  return {
-    uuid: _uuid,
-    element,
-    rect,
-    remain: true,
-  };
+
+  return rect;
 }
 
-// TODO: consider iframe and shadow root
 function collectBlockElements(
   element: Element,
   _canBeBlock: (el: Element) => boolean,
@@ -179,19 +209,54 @@ function collectBlockElements(
   if (canBeBlock(element)) {
     blockElements.push(element);
   }
-  const children = Array.from(element.children);
-  for (const child of children) {
-    collectBlockElements(
-      child,
-      _canBeBlock,
-      isTiny(element) || isParentElementTiny,
-      blockElements,
-    );
+  // iframe対応
+  if (isFrameElement(element)) {
+    if (element.contentDocument?.readyState === "complete") {
+      console.log("ready");
+      collectBlockElements(
+        element.contentDocument.documentElement,
+        _canBeBlock,
+        isTiny(element) || isParentElementTiny,
+        blockElements,
+      );
+    } else {
+      element.addEventListener("load", () => {
+        element.contentDocument &&
+          collectBlockElements(
+            element.contentDocument.documentElement,
+            _canBeBlock,
+            isTiny(element) || isParentElementTiny,
+            blockElements,
+          );
+      });
+    }
+  } else {
+    const children = Array.from(element.children);
+    for (const child of children) {
+      collectBlockElements(
+        child,
+        _canBeBlock,
+        isTiny(element) || isParentElementTiny,
+        blockElements,
+      );
+    }
+    // shadow DOM対応
+    if (element.shadowRoot) {
+      for (const child of Array.from(element.shadowRoot.children)) {
+        collectBlockElements(
+          child,
+          _canBeBlock,
+          isTiny(element) || isParentElementTiny,
+          blockElements,
+        );
+      }
+    }
   }
 }
 
 // まずcheckVisibilityで最低限の可視性は担保する
 // そのうえで枠線も背景色もない、かつtextNodeを直接の子要素として持たない要素は見えないと判断する
+// TODO: iframe内要素についてはrectのintersectをとって枠内にいるか判定する
 function isVisible(element: Element): boolean {
   if (
     element.id === ballId ||
