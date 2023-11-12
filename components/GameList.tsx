@@ -18,6 +18,11 @@ export function GameList(props: { fontSize: string }) {
         </a>: irritating puzzle
       </li>
       <li>
+        <a href="/guest_rooms/brickBlockAnywhere">
+          <strong>brick-block-anywhere(DEMO)</strong>
+        </a>: legendary brick-block game for those who love DOM
+      </li>
+      <li>
         <a href="./guest_rooms/hotel/index.html">
           <strong>hotel</strong>
         </a>: for those who like riddles…

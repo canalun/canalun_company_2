@@ -5,24 +5,28 @@
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/_404.tsx";
 import * as $1 from "./routes/api/joke.ts";
-import * as $2 from "./routes/guest_rooms/oshiriGame.tsx";
-import * as $3 from "./routes/guest_rooms/reverseGame.tsx";
-import * as $4 from "./routes/index.tsx";
-import * as $5 from "./routes/old_index.tsx";
-import * as $$0 from "./islands/Counter.tsx";
+import * as $2 from "./routes/guest_rooms/brickBlockAnywhere.tsx";
+import * as $3 from "./routes/guest_rooms/iframeContent.tsx";
+import * as $4 from "./routes/guest_rooms/oshiriGame.tsx";
+import * as $5 from "./routes/guest_rooms/reverseGame.tsx";
+import * as $6 from "./routes/index.tsx";
+import * as $7 from "./routes/old_index.tsx";
+import * as $$0 from "./islands/BrickBlockAnywhere.tsx";
 import * as $$1 from "./islands/OceanLogo.tsx";
 
 const manifest = {
   routes: {
     "./routes/_404.tsx": $0,
     "./routes/api/joke.ts": $1,
-    "./routes/guest_rooms/oshiriGame.tsx": $2,
-    "./routes/guest_rooms/reverseGame.tsx": $3,
-    "./routes/index.tsx": $4,
-    "./routes/old_index.tsx": $5,
+    "./routes/guest_rooms/brickBlockAnywhere.tsx": $2,
+    "./routes/guest_rooms/iframeContent.tsx": $3,
+    "./routes/guest_rooms/oshiriGame.tsx": $4,
+    "./routes/guest_rooms/reverseGame.tsx": $5,
+    "./routes/index.tsx": $6,
+    "./routes/old_index.tsx": $7,
   },
   islands: {
-    "./islands/Counter.tsx": $$0,
+    "./islands/BrickBlockAnywhere.tsx": $$0,
     "./islands/OceanLogo.tsx": $$1,
   },
   baseUrl: import.meta.url,
