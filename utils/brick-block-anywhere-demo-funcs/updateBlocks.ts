@@ -6,16 +6,15 @@ import {
   type RealBlock,
   type VirtualBlock,
 } from "@/utils/brick-block-anywhere-demo-funcs/blocks.ts";
+import { isElement } from "@/utils/brick-block-anywhere-demo-funcs/lodash.ts";
 import {
   type RemoveBlockRequestToFrame,
   type RemoveBlockResponseToSource,
   sendRequest,
 } from "@/utils/brick-block-anywhere-demo-funcs/message.ts";
 import {
-  assert,
   isFrameElement,
 } from "@/utils/brick-block-anywhere-demo-funcs/utils.ts";
-import { isElement } from "@/utils/brick-block-anywhere-demo-funcs/lodash.ts";
 
 export function requestBlockRemoveAnimation(blocks: Block[]) {
   requestAnimationFrame(() => {
