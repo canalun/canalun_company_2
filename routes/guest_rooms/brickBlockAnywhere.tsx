@@ -13,7 +13,7 @@ export default function brickBlockAnywhere() {
       <body>
         <h1>Demo: Brick-Block-Anywhere</h1>
         <iframe
-          style={{ width: "80vh", height: "60vh" }}
+          style={{ width: "90vw", height: "30vh" }}
           src={"/guest_rooms/iframeContent"}
         />
         {[0, 1, 2].map(() => {

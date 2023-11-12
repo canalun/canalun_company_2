@@ -11,26 +11,41 @@ import { requestBlockRemoveAnimation } from "@/utils/brick-block-anywhere-demo-f
 export function standby(ball: Ball, bar: Bar, blocks: Block[]) {
   // 最初はbarとballを動かせる
   globalThis.addEventListener("mousemove", TableAndBallMove);
+  globalThis.addEventListener("touchmove", TableAndBallMove);
 
   // クリックで始まるようにする
   globalThis.addEventListener("click", function start() {
+    // クリックイベントを削除する
+    globalThis.removeEventListener("click", start);
+
     globalThis.removeEventListener("mousemove", TableAndBallMove);
+    globalThis.removeEventListener("touchmove", TableAndBallMove);
+
     globalThis.addEventListener("mousemove", TableMove);
+    globalThis.addEventListener("touchmove", TableMove);
 
     // ボールの移動, 当たり判定の計算を開始する
     updateBall(ball, bar, blocks);
     // ブロックの描画を更新する
     requestBlockRemoveAnimation(blocks);
-
-    // クリックイベントを削除する
-    globalThis.removeEventListener("click", start);
   });
 
-  function TableAndBallMove(e: MouseEvent) {
-    bar.style.left = `${e.clientX - barSetting.width / 2}px`;
-    ball.style.left = `${e.clientX - ballSetting.width / 2}px`;
+  function TableAndBallMove(e: MouseEvent | TouchEvent) {
+    const { x } = getXYFromTouchEvent(e);
+    bar.style.left = `${x - barSetting.width / 2}px`;
+    ball.style.left = `${x - ballSetting.width / 2}px`;
   }
-  function TableMove(e: MouseEvent) {
-    bar.style.left = `${e.clientX - barSetting.width / 2}px`;
+  function TableMove(e: MouseEvent | TouchEvent) {
+    const { x } = getXYFromTouchEvent(e);
+    bar.style.left = `${x - barSetting.width / 2}px`;
+  }
+}
+
+function getXYFromTouchEvent(event: TouchEvent | MouseEvent) {
+  console.log(event.type);
+  if (event instanceof MouseEvent) {
+    return { x: event.clientX, y: event.clientY };
+  } else {
+    return { x: event.touches[0].clientX, y: event.touches[0].clientY };
   }
 }

@@ -7,6 +7,6 @@
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.2",
     "xml/": "https://deno.land/x/xml@2.0.4/",
     "dotenv/": "https://deno.land/x/dotenv@v3.2.0/",
-    "std/": "https://deno.land/std@0.79.0/"
+    "std/": "https://deno.land/std@0.206.0/"
   }
 }

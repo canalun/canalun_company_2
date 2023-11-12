@@ -12,6 +12,7 @@ import {
   isFrameElement,
   type Prettify,
 } from "@/utils/brick-block-anywhere-demo-funcs/utils.ts";
+import * as uuid from "std/uuid/mod.ts";
 
 export type Block = RealBlock | VirtualBlock;
 export type RealBlock = {
@@ -43,13 +44,6 @@ export type VirtualBlock = Prettify<
     source: MessageEventSource;
   }
 >;
-declare global {
-  interface Element {
-    checkVisibility(
-      options: { checkVisibilityCSS: boolean; checkOpacity: boolean },
-    ): boolean;
-  }
-}
 
 export function isRealBlock(block: Block): block is RealBlock {
   return block.element !== null;
@@ -162,9 +156,9 @@ function convertElementToRealBlock(element: Element): RealBlock {
     left: _rect.left,
     right: _rect.right,
   };
-  const uuid = crypto.randomUUID();
+  const _uuid = uuid.v1.generate().toString();
   return {
-    uuid,
+    uuid: _uuid,
     element,
     rect,
     remain: true,
@@ -207,11 +201,11 @@ function isVisible(element: Element): boolean {
     return false;
   }
 
-  if (
-    !element.checkVisibility({ checkVisibilityCSS: true, checkOpacity: true })
-  ) {
-    return false;
-  }
+  // if (
+  //   !element.checkVisibility({ checkVisibilityCSS: true, checkOpacity: true })
+  // ) {
+  //   return false;
+  // }
 
   if (
     element.tagName === "IMG" ||

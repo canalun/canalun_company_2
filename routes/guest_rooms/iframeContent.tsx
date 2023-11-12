@@ -9,20 +9,20 @@ export default function iframeContent() {
         </em>
       </p>
       <img
-        width={120}
-        height={120}
+        width={"100vw"}
+        height={"100vh"}
         alt="alpaca"
         src="/CEOs/alpaca.jpeg"
       />
       <img
-        width={100}
-        height={100}
+        width={"100vw"}
+        height={"100vh"}
         alt="boy"
         src="/CEOs/boy.jpeg"
       />
       <img
-        width={140}
-        height={140}
+        width={"100vw"}
+        height={"100vh"}
         alt="goat"
         src="/CEOs/goat.jpeg"
       />
@@ -30,14 +30,14 @@ export default function iframeContent() {
         <p>This is in Iframe</p>
         <div>
           <img
-            width={120}
-            height={120}
+            width={"100vw"}
+            height={"100vh"}
             alt="cat in the box"
             src="/CEOs/cat_in_the_box.jpeg"
           />
           <img
-            width={150}
-            height={150}
+            width={"100vw"}
+            height={"100vh"}
             alt="cat doing dj"
             src="/CEOs/dj_cat.jpg"
           />
