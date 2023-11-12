@@ -26,28 +26,6 @@ export default function iframeContent() {
         alt="goat"
         src="/CEOs/goat.jpeg"
       />
-      <div>
-        <p>This is in Iframe</p>
-        <div>
-          <img
-            width={"100vw"}
-            height={"100vh"}
-            alt="cat in the box"
-            src="/CEOs/cat_in_the_box.jpeg"
-          />
-          <img
-            width={"100vw"}
-            height={"100vh"}
-            alt="cat doing dj"
-            src="/CEOs/dj_cat.jpg"
-          />
-        </div>
-        <p>This is in Iframe</p>
-        <p>This is in Iframe</p>
-      </div>
-      <p>
-        <a href="/">Link</a>
-      </p>
     </>
   );
 }
