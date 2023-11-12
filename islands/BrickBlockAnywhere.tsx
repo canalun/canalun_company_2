@@ -9,6 +9,7 @@ export default function BrickBlockAnywhere() {
   // Return any prerenderable JSX here which makes sense for your island
   if (!IS_BROWSER) return <div></div>;
 
-  main();
+  // document.bodyがpreventScrollで必要なので、読み込みが完了したときに実行する
+  globalThis.onload = main;
   return <div></div>;
 }
