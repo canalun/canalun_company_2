@@ -35,8 +35,8 @@ export const ballSetting: BallSetting = (() => {
 export const initialBottom = 30;
 
 export const ballZIndex = 2147483646;
-export const barZIndex = 2147483646;
-export const veilZIndex = 2147483645;
+export const barZIndex = ballZIndex;
+export const veilZIndex = ballZIndex - 1;
 
 // per frame
 export const initialBallAbsoluteVelocity: Vector = {

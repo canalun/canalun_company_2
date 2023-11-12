@@ -201,11 +201,13 @@ function isVisible(element: Element): boolean {
     return false;
   }
 
-  // if (
-  //   !element.checkVisibility({ checkVisibilityCSS: true, checkOpacity: true })
-  // ) {
-  //   return false;
-  // }
+  if (
+    // TODO: polyfill
+    element.checkVisibility &&
+    !element.checkVisibility({ checkVisibilityCSS: true, checkOpacity: true })
+  ) {
+    return false;
+  }
 
   if (
     element.tagName === "IMG" ||
