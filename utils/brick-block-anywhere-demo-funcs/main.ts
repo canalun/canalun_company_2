@@ -8,12 +8,19 @@ import {
   veilZIndex,
 } from "@/utils/brick-block-anywhere-demo-funcs/settings.ts";
 import { standby } from "@/utils/brick-block-anywhere-demo-funcs/standby.ts";
+import { preventScroll } from "@/utils/brick-block-anywhere-demo-funcs/preventScroll.ts";
 
 // Do not maintain this code.
 // This code is duplicated from the repo
 // of brick-block-anywhere for demo purpose.
 
-export function BrickBlockAnywhere() {
+export function main() {
+  // ページ凍結
+  preventScroll();
+  for (let i = 0; i < 65535; i++) {
+    clearTimeout(i);
+  }
+
   // 余白を作ってボールと台を描画する
   const { ball, table } = initializeBallAndBar();
 

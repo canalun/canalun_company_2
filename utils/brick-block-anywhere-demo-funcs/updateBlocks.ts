@@ -1,5 +1,6 @@
 import {
   type Block,
+  getComputedStyleUsingCache,
   isRealBlock,
   type RealBlock,
   type VirtualBlock,
@@ -13,6 +14,7 @@ import {
   assert,
   isFrameElement,
 } from "@/utils/brick-block-anywhere-demo-funcs/utils.ts";
+import { isElement } from "@/utils/brick-block-anywhere-demo-funcs/lodash.ts";
 
 export function requestBlockRemoveAnimation(blocks: Block[]) {
   requestAnimationFrame(() => {
@@ -49,18 +51,22 @@ function removeRealBlockAndUpdateBlocksPosition(
       block.element.style instanceof CSSStyleDeclaration,
     "unexpected block.element.style",
   );
+  const originalBorderWidth =
+    getComputedStyleUsingCache(block.element).borderWidth;
   block.element.style.border = "1px solid red";
+  block.element.style.borderWidth = originalBorderWidth;
 
   setTimeout(() => {
-    if (
-      block.element.tagName === "IMG" ||
-      block.element.tagName === "VIDEO" ||
-      block.element.tagName === "svg"
-    ) {
-      removePictureBlock(block);
-    } else {
-      removeNonPictureBlock(block);
-    }
+    // if (
+    //   block.element.tagName === "IMG" ||
+    //   block.element.tagName === "VIDEO" ||
+    //   block.element.tagName === "svg"
+    // ) {
+    //   removePictureBlock(block);
+    // } else {
+    //   removeNonPictureBlock(block);
+    // }
+    removeBlock(block);
     updatePositionOfBlocksByRealBlockRemoval(blocks);
   }, 100);
 }
@@ -179,67 +185,89 @@ function updatePositionOfBlocksByRealBlockRemoval(blocks: Block[]) {
   }
 }
 
-// 画像や動画の場合は同じ大きさで透明の要素に置換する
-function removePictureBlock(block: RealBlock) {
-  if (!block.element.parentElement) {
+function removeBlock(block: RealBlock) {
+  // frame elementはvisibilityを変えると全て消えてしまうので、CSSの調整で消す
+  if (isFrameElement(block.element)) {
+    Object.assign(block.element.style, {
+      backgroundColor: "transparent",
+      borderColor: "transparent",
+      boxShadow: "none",
+    });
     return;
   }
-  const rect = block.element.getBoundingClientRect();
-  const element = document.createElement("div");
-  Object.assign(element.style, {
-    position: getComputedStyle(block.element).position,
-    top: `${rect.top}px`,
-    left: `${rect.left}px`,
-    width: `${rect.width}px`,
-    height: `${rect.height}px`,
-  });
-  block.element.parentElement.insertBefore(element, block.element);
-  block.element.remove();
-  return;
-}
-
-// 背景とボーダーを透明にし、そのうえで自分が持つテキストを見えないようにする
-// 子要素のテキストは消さないように注意
-function removeNonPictureBlock(block: RealBlock) {
-  assert(
-    "style" in block.element &&
-      block.element.style instanceof CSSStyleDeclaration,
-    "unexpected block.element.style",
-  );
   Object.assign(block.element.style, {
-    backgroundColor: "transparent",
-    border: "none",
-    boxShadow: "none",
+    visibility: "hidden",
   });
-  // textNodeを見えないようにしたいがcolorを変えると子要素に伝播するおそれがあるため置換で対応
-  const textNodes = Array.from(block.element.childNodes).filter(
-    (node) => node.nodeType === Node.TEXT_NODE,
-  );
-  requestAnimationFrame(() => {
-    textNodes.forEach((node) => {
-      if (!node.textContent || !node.parentElement) {
-        return;
-      }
-      // preタグはマージンが挟まるなど使い勝手が悪い
-      // 一方で普通のスペースを使ってもspanタグの中に入れると無視される
-      // そこでString.fromCharCode(160)、つまりnbsp(=non-breaking space)を使って空白を表現する
-      // String.fromCharCode(160)は&nbsp;と同じだが、replace関数で後者を文字列として入れるとエスケープされず意味がなくなることに注意
-      // またnbspは定義より改行されなくなるのでwbrで改行を入れる
-      // TODO: 全角文字対応
-      for (let i = 0; i < node.textContent.length; i++) {
-        // 単語はもともと改行されないのでwbrを入れない
-        if (node.textContent[i] === " ") {
-          const nbsp = document.createTextNode(String.fromCharCode(160));
-          const wbr = document.createElement("wbr");
-          node.parentElement.insertBefore(wbr, node);
-          node.parentElement.insertBefore(nbsp, node);
-          node.parentElement.insertBefore(wbr, node);
-        } else {
-          const nbsp = document.createTextNode(String.fromCharCode(160));
-          node.parentElement.insertBefore(nbsp, node);
-        }
-      }
-      node.remove();
+  Array.from(block.element.childNodes).forEach((node) => {
+    if (!isElement(node)) return;
+    if (getComputedStyleUsingCache(node).visibility === "hidden") return;
+    Object.assign(node.style, {
+      visibility: "visible",
     });
   });
 }
+
+// // 画像や動画の場合は同じ大きさで透明の要素に置換する
+// function removePictureBlock(block: RealBlock) {
+//   if (!block.element.parentElement) {
+//     return;
+//   }
+//   const rect = block.element.getBoundingClientRect();
+//   const element = document.createElement("div");
+//   Object.assign(element.style, {
+//     position: getComputedStyle(block.element).position,
+//     top: `${rect.top}px`,
+//     left: `${rect.left}px`,
+//     width: `${rect.width}px`,
+//     height: `${rect.height}px`,
+//   });
+//   block.element.parentElement.insertBefore(element, block.element);
+//   block.element.remove();
+//   return;
+// }
+
+// // 背景とボーダーを透明にし、そのうえで自分が持つテキストを見えないようにする
+// // 子要素のテキストは消さないように注意
+// function removeNonPictureBlock(block: RealBlock) {
+//   assert(
+//     "style" in block.element &&
+//       block.element.style instanceof CSSStyleDeclaration,
+//     "unexpected block.element.style",
+//   );
+//   Object.assign(block.element.style, {
+//     backgroundColor: "transparent",
+//     borderColor: "transparent",
+//     boxShadow: "none",
+//   });
+//   // textNodeを見えないようにしたいがcolorを変えると子要素に伝播するおそれがあるため置換で対応
+//   const textNodes = Array.from(block.element.childNodes).filter(
+//     (node) => node.nodeType === Node.TEXT_NODE,
+//   );
+//   requestAnimationFrame(() => {
+//     textNodes.forEach((node) => {
+//       if (!node.textContent || !node.parentElement) {
+//         return;
+//       }
+//       // preタグはマージンが挟まるなど使い勝手が悪い
+//       // 一方で普通のスペースを使ってもspanタグの中に入れると無視される
+//       // そこでString.fromCharCode(160)、つまりnbsp(=non-breaking space)を使って空白を表現する
+//       // String.fromCharCode(160)は&nbsp;と同じだが、replace関数で後者を文字列として入れるとエスケープされず意味がなくなることに注意
+//       // またnbspは定義より改行されなくなるのでwbrで改行を入れる
+//       // TODO: 全角文字対応
+//       for (let i = 0; i < node.textContent.length; i++) {
+//         // 単語はもともと改行されないのでwbrを入れない
+//         if (node.textContent[i] === " ") {
+//           const nbsp = document.createTextNode(String.fromCharCode(160));
+//           const wbr = document.createElement("wbr");
+//           node.parentElement.insertBefore(wbr, node);
+//           node.parentElement.insertBefore(nbsp, node);
+//           node.parentElement.insertBefore(wbr, node);
+//         } else {
+//           const nbsp = document.createTextNode(String.fromCharCode(160));
+//           node.parentElement.insertBefore(nbsp, node);
+//         }
+//       }
+//       node.remove();
+//     });
+//   });
+// }

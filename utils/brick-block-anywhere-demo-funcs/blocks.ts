@@ -322,7 +322,9 @@ function hasNoBackgroundColor(element: Element): boolean {
 // }
 
 const styleCache = new Map<Element, CSSStyleDeclaration>();
-function getComputedStyleUsingCache(element: Element): CSSStyleDeclaration {
+export function getComputedStyleUsingCache(
+  element: Element,
+): CSSStyleDeclaration {
   const cache = styleCache.get(element);
   if (cache) {
     return cache;
