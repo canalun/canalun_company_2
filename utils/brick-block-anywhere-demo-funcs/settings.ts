@@ -8,22 +8,29 @@ type BarSetting = {
   height: number;
   color: string;
 };
-export const barSetting: BarSetting = {
-  width: 250,
-  height: 10,
-  color: "blue",
-};
+
+export const barSetting: BarSetting = (() => {
+  const width = globalThis.innerWidth * 0.28;
+  return {
+    width,
+    height: Math.max(10 * width / 250, 10),
+    color: "blue",
+  };
+})();
 
 type BallSetting = {
   width: number;
   height: number;
   color: string;
 };
-export const ballSetting: BallSetting = {
-  width: 25,
-  height: 25,
-  color: "red",
-};
+export const ballSetting: BallSetting = (() => {
+  const width = globalThis.innerWidth * 0.2;
+  return {
+    width: Math.max(10 * width / 250, 25),
+    height: Math.max(10 * width / 250, 25),
+    color: "red",
+  };
+})();
 
 export const initialBottom = 30;
 
@@ -33,8 +40,8 @@ export const veilZIndex = 2147483645;
 
 // per frame
 export const initialBallAbsoluteVelocity: Vector = {
-  x: 1.2,
-  y: 1.2,
+  x: 2.5,
+  y: 2.5,
 };
 export const initialBallDirection: Vector = {
   x: 1,
