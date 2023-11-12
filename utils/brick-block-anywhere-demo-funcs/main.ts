@@ -16,7 +16,8 @@ import { preventScroll } from "@/utils/brick-block-anywhere-demo-funcs/preventSc
 
 export function main() {
   // ページ凍結
-  preventScroll();
+  if (!window.top) return;
+  preventScroll(window.top);
   for (let i = 0; i < 65535; i++) {
     clearTimeout(i);
   }
