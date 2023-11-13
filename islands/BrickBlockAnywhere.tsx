@@ -10,6 +10,9 @@ export default function BrickBlockAnywhere() {
   if (!IS_BROWSER) return <div></div>;
 
   // document.bodyがpreventScrollで必要なので、読み込みが完了したときに実行する
-  globalThis.onload = main;
+  globalThis.document.readyState === "complete"
+    ? main()
+    : globalThis.document.addEventListener("DOMContentLoaded", main);
+
   return <div></div>;
 }
