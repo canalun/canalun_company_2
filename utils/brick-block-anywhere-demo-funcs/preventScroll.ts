@@ -1,5 +1,6 @@
 // https://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
 // の方法はボールとバーのスマホでのtouchmoveによる移動もできなくしてしまうのでダメ
+// https://xn--nckmepf1g6g.com/2022/06/15/scroll/ を採用した
 
 import { isFrameElement } from "@/utils/brick-block-anywhere-demo-funcs/utils.ts";
 
