@@ -10,9 +10,11 @@ export default function BrickBlockAnywhere() {
   if (!IS_BROWSER) return <div></div>;
 
   // document.bodyがpreventScrollで必要なので、読み込みが完了したときに実行する
+  // また、iframeの要素が読み込まれてからブロックを計算したいのでcompleteかloadで実行する
+  // (interactiveやDOMContentLoadedの段階ではない)
   globalThis.document.readyState === "complete"
     ? main()
-    : globalThis.document.addEventListener("DOMContentLoaded", main);
+    : globalThis.addEventListener("load", main);
 
   return <div></div>;
 }

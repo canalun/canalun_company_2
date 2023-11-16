@@ -15,6 +15,7 @@ import { preventScroll } from "@/utils/brick-block-anywhere-demo-funcs/preventSc
 // of brick-block-anywhere for demo purpose.
 
 export function main() {
+  console.log("executed");
   // ページ凍結
   if (!window.top) return;
   preventScroll(window.top);
