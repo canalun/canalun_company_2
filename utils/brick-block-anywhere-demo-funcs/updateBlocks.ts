@@ -4,40 +4,38 @@ import {
   getRectOfRealBlock,
   isRealBlock,
   type RealBlock,
-  type VirtualBlock,
 } from "@/utils/brick-block-anywhere-demo-funcs/blocks.ts";
 import { isElement } from "@/utils/brick-block-anywhere-demo-funcs/lodash.ts";
-import {
-  type RemoveBlockRequestToFrame,
-  type RemoveBlockResponseToSource,
-  sendRequest,
-} from "@/utils/brick-block-anywhere-demo-funcs/message.ts";
 import {
   isFrameElement,
 } from "@/utils/brick-block-anywhere-demo-funcs/utils.ts";
 
-export function requestBlockRemoveAnimation(blocks: Block[]) {
+export function requestBlockRemoveAnimation(
+  blocks: Block[],
+  ringCollisionSound: () => void,
+) {
   requestAnimationFrame(() => {
     for (let i = 0; i < blocks.length; i++) {
       const block = blocks[i];
       if (!block.remain) {
-        removeBlockAndUpdateBlocksPosition(block, blocks);
+        removeBlockAndUpdateBlocksPosition(block, blocks, ringCollisionSound);
         blocks.splice(i, 1);
         // visualizeBlocks(blocks)
       }
     }
-    requestAnimationFrame(() => requestBlockRemoveAnimation(blocks));
+    requestAnimationFrame(() =>
+      requestBlockRemoveAnimation(blocks, ringCollisionSound)
+    );
   });
 }
 
 export function removeBlockAndUpdateBlocksPosition(
   block: Block,
   blocks: Block[],
+  ringCollisionSound: () => void,
 ) {
   if (isRealBlock(block)) {
-    removeRealBlockAndUpdateBlocksPosition(block, blocks);
-  } else {
-    removeVirtualBlockAndUpdateBlocksPosition(block, blocks);
+    removeRealBlockAndUpdateBlocksPosition(block, blocks, ringCollisionSound);
   }
 }
 
@@ -45,6 +43,7 @@ export function removeBlockAndUpdateBlocksPosition(
 function removeRealBlockAndUpdateBlocksPosition(
   block: RealBlock,
   blocks: Block[],
+  ringCollisionSound: () => void,
 ) {
   const originalBorderWidth =
     getComputedStyleUsingCache(block.element).borderWidth;
@@ -63,74 +62,9 @@ function removeRealBlockAndUpdateBlocksPosition(
     //   removeNonPictureBlock(block);
     // }
     removeBlock(block);
+    ringCollisionSound();
     updatePositionOfBlocksByRealBlockRemoval(blocks);
   }, 100);
-}
-
-// 消えたVirtual Blockのuuidをフレームに送って、フレーム内でblock消去処理を実施
-// そのあとそれによって更新されたフレーム内のblockInfoListを受け取って、
-// それをもとにVirtual Blockの位置情報を更新する
-// TODO: 多段フレーム
-function removeVirtualBlockAndUpdateBlocksPosition(
-  removedVirtualBlock: VirtualBlock,
-  blocks: Block[],
-) {
-  const updateBlocksByRemoveBlockResponse = (
-    event: MessageEvent<RemoveBlockResponseToSource>,
-  ) => {
-    if (event.data.message !== "removeBlockResponse") {
-      return;
-    }
-
-    // create map just for optimization
-    const uuidMapForOptimization = new Map<string, VirtualBlock>();
-    for (let i = 0; i < blocks.length; i++) {
-      const block = blocks[i];
-      if (!isRealBlock(block)) {
-        uuidMapForOptimization.set(blocks[i].uuid, block);
-      }
-    }
-
-    const updatedBlockInfoList = event.data.blockInfoList;
-    for (let i = 0; i < updatedBlockInfoList.length; i++) {
-      const blockToBeUpdated = uuidMapForOptimization.get(
-        updatedBlockInfoList[i].uuid,
-      );
-      if (!blockToBeUpdated) {
-        continue;
-      }
-      Object.assign(
-        blockToBeUpdated,
-        {
-          rect: {
-            top: updatedBlockInfoList[i].rectInFrame.top +
-              blockToBeUpdated.frameRect.top,
-            bottom: updatedBlockInfoList[i].rectInFrame.bottom +
-              blockToBeUpdated.frameRect.top,
-            left: updatedBlockInfoList[i].rectInFrame.left +
-              blockToBeUpdated.frameRect.left,
-            right: updatedBlockInfoList[i].rectInFrame.right +
-              blockToBeUpdated.frameRect.left,
-          },
-          rectInFrame: updatedBlockInfoList[i].rectInFrame,
-          remain: updatedBlockInfoList[i].remain,
-        },
-      );
-    }
-    globalThis.removeEventListener(
-      "message",
-      updateBlocksByRemoveBlockResponse,
-    );
-  };
-  globalThis.addEventListener("message", updateBlocksByRemoveBlockResponse);
-
-  sendRequest<RemoveBlockRequestToFrame>(
-    removedVirtualBlock.source as Window, // TODO: remove type assertion
-    {
-      message: "removeBlockRequest",
-      uuid: removedVirtualBlock.uuid,
-    },
-  );
 }
 
 // virtual blockの位置もframeの位置変更情報をもとに更新することに注意

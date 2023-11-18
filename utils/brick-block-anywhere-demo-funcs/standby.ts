@@ -7,8 +7,11 @@ import {
 } from "@/utils/brick-block-anywhere-demo-funcs/settings.ts";
 import { updateBall } from "@/utils/brick-block-anywhere-demo-funcs/updateBall.ts";
 import { requestBlockRemoveAnimation } from "@/utils/brick-block-anywhere-demo-funcs/updateBlocks.ts";
+import { setSoundEffect } from "@/utils/brick-block-anywhere-demo-funcs/soundEffect.ts";
 
 export function standby(ball: Ball, bar: Bar, blocks: Block[]) {
+  const ring = setSoundEffect();
+
   // 最初はbarとballを動かせる
   globalThis.addEventListener("mousemove", TableAndBallMove);
   globalThis.addEventListener("touchmove", TableAndBallMove);
@@ -27,7 +30,7 @@ export function standby(ball: Ball, bar: Bar, blocks: Block[]) {
     // ボールの移動, 当たり判定の計算を開始する
     updateBall(ball, bar, blocks);
     // ブロックの描画を更新する
-    requestBlockRemoveAnimation(blocks);
+    requestBlockRemoveAnimation(blocks, ring);
   });
 
   function TableAndBallMove(e: MouseEvent | TouchEvent) {
