@@ -28,9 +28,9 @@ export function standby(ball: Ball, bar: Bar, blocks: Block[]) {
     globalThis.addEventListener("touchmove", TableMove);
 
     // ボールの移動, 当たり判定の計算を開始する
-    updateBall(ball, bar, blocks);
+    updateBall(ball, bar, blocks, ring);
     // ブロックの描画を更新する
-    requestBlockRemoveAnimation(blocks, ring);
+    requestBlockRemoveAnimation(blocks);
   });
 
   function TableAndBallMove(e: MouseEvent | TouchEvent) {

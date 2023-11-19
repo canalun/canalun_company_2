@@ -21,7 +21,12 @@ import {
   vectorProduction,
 } from "@/utils/brick-block-anywhere-demo-funcs/utils.ts";
 
-export function updateBall(ball: Ball, bar: Bar, blocks: Block[]) {
+export function updateBall(
+  ball: Ball,
+  bar: Bar,
+  blocks: Block[],
+  ringSoundEffect: () => void,
+) {
   // ここにアニメーションを書く
   // 1. ボールを動かす。ただしボールが壁に当たったら反射する
   // 3. ボールがブロックに当たったらブロックを消す
@@ -64,6 +69,7 @@ export function updateBall(ball: Ball, bar: Bar, blocks: Block[]) {
       blocks,
       currentBallDirection,
       currentBallAbsoluteVelocity,
+      ringSoundEffect,
     );
 
     currentBallVelocity = vectorProduction(
@@ -83,6 +89,7 @@ function getUpdatedBallDirection(
   blocks: Block[],
   currentBallDirection: Vector,
   currentBallAbsoluteVelocity: Vector,
+  ringSoundEffect: () => void,
 ): Vector {
   const collisionPointsOnBall = getCollisionPointsOnBall(
     getBallCenterPosition(ball),
@@ -106,6 +113,13 @@ function getUpdatedBallDirection(
     blocks,
     directionUpdatedByBar,
   );
+
+  if (
+    directionUpdatedByBlock.x !== currentBallDirection.x ||
+    directionUpdatedByBlock.y !== currentBallDirection.y
+  ) {
+    ringSoundEffect();
+  }
 
   return directionUpdatedByBlock;
 }

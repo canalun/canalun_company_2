@@ -12,30 +12,26 @@ import {
 
 export function requestBlockRemoveAnimation(
   blocks: Block[],
-  ringCollisionSound: () => void,
 ) {
   requestAnimationFrame(() => {
     for (let i = 0; i < blocks.length; i++) {
       const block = blocks[i];
       if (!block.remain) {
-        removeBlockAndUpdateBlocksPosition(block, blocks, ringCollisionSound);
+        removeBlockAndUpdateBlocksPosition(block, blocks);
         blocks.splice(i, 1);
         // visualizeBlocks(blocks)
       }
     }
-    requestAnimationFrame(() =>
-      requestBlockRemoveAnimation(blocks, ringCollisionSound)
-    );
+    requestAnimationFrame(() => requestBlockRemoveAnimation(blocks));
   });
 }
 
 export function removeBlockAndUpdateBlocksPosition(
   block: Block,
   blocks: Block[],
-  ringCollisionSound: () => void,
 ) {
   if (isRealBlock(block)) {
-    removeRealBlockAndUpdateBlocksPosition(block, blocks, ringCollisionSound);
+    removeRealBlockAndUpdateBlocksPosition(block, blocks);
   }
 }
 
@@ -43,7 +39,6 @@ export function removeBlockAndUpdateBlocksPosition(
 function removeRealBlockAndUpdateBlocksPosition(
   block: RealBlock,
   blocks: Block[],
-  ringCollisionSound: () => void,
 ) {
   const originalBorderWidth =
     getComputedStyleUsingCache(block.element).borderWidth;
@@ -62,7 +57,6 @@ function removeRealBlockAndUpdateBlocksPosition(
     //   removeNonPictureBlock(block);
     // }
     removeBlock(block);
-    ringCollisionSound();
     updatePositionOfBlocksByRealBlockRemoval(blocks);
   }, 100);
 }
