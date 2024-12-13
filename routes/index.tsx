@@ -20,7 +20,7 @@ export const handler: Handlers = {
 
 // MEMO: レスポンシブ対応は基本的に各スタイル中で min, max を多用して対応している。どうしてもそれでは無理だった吹き出しは、コンテナクエリで対応
 export default function Ocean({ data: article }: PageProps<Article[]>) {
-  const h3fontSize = "min(15vw, 15vh, 60px)";
+  const h3fontSize = "min(10vw, 10vh, 40px)";
   return (
     <>
       <Head>
@@ -81,13 +81,14 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
             src: url('/font/DolphinOceanWave.woff') format('woff');
             unicode-range: U+0041-007A; /* only alphabet */
           }
+          * {
+            font-family: 'system-ui';
+          }
           h3 {
-            font-family: DolphinOceanWave;
             color: black;
             font-size: ${h3fontSize};
             margin-top: 0px;
             margin-bottom: 0px;
-            text-indent: 0.1em;
           }
           `}
         </style>

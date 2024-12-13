@@ -9,19 +9,21 @@ export default function OceanLogo() {
     new Array<boolean>((logoLine1 + logoLine2).length).fill(true)
   );
 
+  const style = {
+    //fontFamily: "Sacramento, cursive",
+    fontFamily: "DolphinOceanWave",
+    //fontStyle: "italic",
+    fontSize: "min(20vw, 20vh, 90px)",
+    textShadow: "min(1.5vw, 1.5vh, 7px) 0px 0px white",
+    fontWeight: "bold",
+    "-webkit-text-stroke": `2px ${OceanPalette.blue.sea}`,
+    color: "transparent",
+    display: "inline",
+    marginRight: "0.08em",
+  };
+
   return (
-    <div
-      style={{
-        //fontFamily: "Sacramento, cursive",
-        fontFamily: "DolphinOceanWave",
-        textShadow: "min(1.5vw, 1.5vh, 7px) 0px 0px white",
-        fontSize: "min(20vw, 20vh, 90px)",
-        //fontStyle: "italic",
-        fontWeight: "bold",
-        "-webkit-text-stroke": `2px ${OceanPalette.blue.sea}`,
-        color: "transparent",
-      }}
-    >
+    <div>
       {[...logoLine1].map((char, i) => {
         return (
           <div
@@ -30,11 +32,7 @@ export default function OceanLogo() {
                 [...displays].map((state, n) => (n === i ? !state : state))
               );
             }}
-            style={{
-              display: "inline",
-              marginRight: "0.08em",
-              visibility: displays[i] ? "" : "hidden",
-            }}
+            style={{ ...style, visibility: displays[i] ? "" : "hidden" }}
           >
             {char}
           </div>
@@ -52,8 +50,7 @@ export default function OceanLogo() {
               );
             }}
             style={{
-              display: "inline",
-              marginRight: "0.08em",
+              ...style,
               visibility: displays[logoLine1.length + i] ? "" : "hidden",
             }}
           >
