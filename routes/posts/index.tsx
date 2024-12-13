@@ -16,12 +16,21 @@ export default function BlogIndexPage(props: PageProps<PostMetadata[]>) {
   const posts = props.data;
   return (
     <body style={{ fontFamily: "sans-serif" }}>
-      <h1>Awesome Posts</h1>
-      <div>
-        {posts.map((post) => (
-          <PostCard postMetadata={post} />
-        ))}
-      </div>
+      <main
+        style={{
+          width: "min(60vw, 750px)",
+          fontSize: "20px",
+          margin: "8vh auto",
+          lineHeight: "2em",
+        }}
+      >
+        <h2>Awesome Posts from Canalun Company</h2>
+        <div>
+          {posts.map((post) => (
+            <PostCard postMetadata={post} />
+          ))}
+        </div>
+      </main>
     </body>
   );
 }
@@ -30,15 +39,16 @@ function PostCard(props: { postMetadata: PostMetadata }) {
   const { postMetadata } = props;
   return (
     <div>
+      <span>
+        {new Date(postMetadata.publishedAt).toLocaleDateString("en-us", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
+      </span>
+      <br />
       <a href={`/posts/${postMetadata.slug}`}>
-        <h3>{postMetadata.title}</h3>
-        <time>
-          {new Date(postMetadata.publishedAt).toLocaleDateString("en-us", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </time>
+        <span>{postMetadata.title}</span>
       </a>
     </div>
   );
