@@ -6,7 +6,7 @@ export default function OceanLogo() {
   const logoLine1 = "Canalun";
   const logoLine2 = "Company";
   const [displays, setDisplays] = useState(
-    new Array<boolean>((logoLine1 + logoLine2).length).fill(true),
+    new Array<boolean>((logoLine1 + logoLine2).length).fill(true)
   );
 
   return (
@@ -27,7 +27,7 @@ export default function OceanLogo() {
           <div
             onClick={() => {
               setDisplays(
-                [...displays].map((state, n) => n === i ? !state : state),
+                [...displays].map((state, n) => (n === i ? !state : state))
               );
             }}
             style={{
@@ -48,7 +48,7 @@ export default function OceanLogo() {
               setDisplays(
                 [...displays].map((state, n) =>
                   n === i + logoLine1.length ? !state : state
-                ),
+                )
               );
             }}
             style={{
