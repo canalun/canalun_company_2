@@ -27,9 +27,8 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Canalun Company</title>
-      </Head>
-      <style>
-        {`@keyframes wave {
+        <style>
+          {`@keyframes wave {
             from {
               transform:translate(0);
             }
@@ -80,6 +79,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
           @font-face{
             font-family: 'DolphinOceanWave';
             src: url('/font/DolphinOceanWave.woff') format('woff');
+            unicode-range: U+0041-007A; /* only alphabet */
           }
           h3 {
             font-family: DolphinOceanWave;
@@ -90,7 +90,8 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
             text-indent: 0.1em;
           }
           `}
-      </style>
+        </style>
+      </Head>
       <body
         style={{
           position: "relative",
@@ -159,8 +160,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
           id="ocean"
           class="background"
           style={{
-            background:
-              `linear-gradient(${OceanPalette.blue.sea}, ${OceanPalette.blue.deepSea})`,
+            background: `linear-gradient(${OceanPalette.blue.sea}, ${OceanPalette.blue.deepSea})`,
             width: "100%",
             position: "relative",
             overflow: "hidden",
