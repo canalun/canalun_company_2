@@ -19,7 +19,12 @@ export default function PostPage(props: PageProps<Post>) {
         <script src="/zenn/listen-embed-event/index.js" />
       </Head>
       <body>
-        <main>
+        <main
+          style={{
+            fontSize: "16px",
+            margin: "5%",
+          }}
+        >
           <h1>{post.title}</h1>
           <time>
             {new Date(post.publishedAt).toLocaleDateString("en-us", {
