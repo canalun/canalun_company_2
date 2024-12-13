@@ -1,21 +1,30 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
+import { getArticles } from "@/utils/getArticles.ts";
 import {
   Post,
   PostMetadata,
   getAllPostsMetadata,
 } from "../../utils/getPost.ts";
+import { Article } from "@/types/Articles.ts";
 
-export const handler: Handlers<Post[]> = {
+export const handler: Handlers<(Post | Article)[]> = {
   async GET(_req, ctx) {
     const metadataForAllPosts = await getAllPostsMetadata();
-    return ctx.render(metadataForAllPosts);
+
+    const pastArticles = await getArticles();
+
+    return ctx.render(
+      (metadataForAllPosts as (Post | Article)[]).concat(pastArticles)
+    );
   },
 };
 
-export default function BlogIndexPage(props: PageProps<PostMetadata[]>) {
-  const posts = props.data;
+export default function BlogIndexPage(
+  props: PageProps<(PostMetadata | Article)[]>
+) {
+  const entries = props.data;
   return (
-    <body style={{ fontFamily: "sans-serif" }}>
+    <body style={{ fontFamily: "system-ui" }}>
       <main
         style={{
           width: "min(60vw, 750px)",
@@ -26,8 +35,8 @@ export default function BlogIndexPage(props: PageProps<PostMetadata[]>) {
       >
         <h2>Awesome Posts from Canalun Company</h2>
         <div>
-          {posts.map((post) => (
-            <PostCard postMetadata={post} />
+          {entries.map((entry) => (
+            <EntryCard entry={entry} />
           ))}
         </div>
       </main>
@@ -35,20 +44,23 @@ export default function BlogIndexPage(props: PageProps<PostMetadata[]>) {
   );
 }
 
-function PostCard(props: { postMetadata: PostMetadata }) {
-  const { postMetadata } = props;
+type Entry = PostMetadata | Article;
+function EntryCard(props: { entry: Entry }) {
+  const { entry } = props;
   return (
     <div>
       <span>
-        {new Date(postMetadata.publishedAt).toLocaleDateString("en-us", {
+        {new Date(
+          "date" in entry ? entry.date : entry.publishedAt
+        ).toLocaleDateString("en-us", {
           year: "numeric",
           month: "long",
           day: "numeric",
         })}
       </span>
       <br />
-      <a href={`/posts/${postMetadata.slug}`}>
-        <span>{postMetadata.title}</span>
+      <a href={"slug" in entry ? `/posts/${entry.slug}` : entry.link}>
+        <span>{entry.title}</span>
       </a>
     </div>
   );
