@@ -18,7 +18,9 @@ export async function getPost(
   slug: string,
   metadataOnly: boolean
 ): Promise<Post> {
-  const text = await Deno.readTextFile(join("posts", `${slug}.md`));
+  const text = await Deno.readTextFile(
+    join("static/postData/markdown/", `${slug}.md`)
+  );
 
   // showdown has to make html in order to get meta data...!
   const meta = converter.makeHtml(text) && converter.getMetadata();
@@ -40,7 +42,7 @@ export async function getPost(
 
 export async function getAllPostsMetadata(): Promise<Post[]> {
   const posts = [];
-  for await (const dirEntry of Deno.readDir("posts")) {
+  for await (const dirEntry of Deno.readDir("static/postData/markdown")) {
     posts.push(await getPost(dirEntry.name.slice(0, -3), true));
   }
   return posts;
