@@ -1,5 +1,5 @@
 import showdown from "npm:showdown";
-import lib from "npm:zenn-markdown-html";
+import lib from "npm:zenn-markdown-html@latest";
 import { join } from "std/path/mod.ts";
 const markdownToHtml = lib.default;
 
@@ -24,7 +24,11 @@ export async function getPost(
   const meta = converter.makeHtml(text) && converter.getMetadata();
 
   // zenn parser can only handle md without meta data...!
-  const html = metadataOnly ? null : markdownToHtml(text.split("---\n", 3)[2]);
+  const html = metadataOnly
+    ? null
+    : markdownToHtml(text.split("---\n", 3)[2], {
+        embedOrigin: "https://embed.zenn.studio",
+      });
 
   return {
     slug,

@@ -21,8 +21,10 @@ export default function PostPage(props: PageProps<Post>) {
       <body>
         <main
           style={{
+            fontFamily: "sans-serif",
+            width: "min(60vw, 750px)",
             fontSize: "16px",
-            margin: "5%",
+            margin: "8vh auto",
           }}
         >
           <h1>{post.title}</h1>
@@ -38,6 +40,9 @@ export default function PostPage(props: PageProps<Post>) {
           <br></br>
           <div
             className="znc"
+            style={{
+              lineHeight: "2em",
+            }}
             dangerouslySetInnerHTML={{
               __html:
                 post.content ?? "<div>oh no...the post is unavailable...</div>",
