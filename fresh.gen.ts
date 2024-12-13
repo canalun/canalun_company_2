@@ -10,6 +10,8 @@ import * as $4 from "./routes/guest_rooms/oshiriGame.tsx";
 import * as $5 from "./routes/guest_rooms/reverseGame.tsx";
 import * as $6 from "./routes/index.tsx";
 import * as $7 from "./routes/old_index.tsx";
+import * as $8 from "./routes/posts/[slug].tsx";
+import * as $9 from "./routes/posts/index.tsx";
 import * as $$0 from "./islands/BrickBlockAnywhere.tsx";
 import * as $$1 from "./islands/OceanLogo.tsx";
 
@@ -23,6 +25,8 @@ const manifest = {
     "./routes/guest_rooms/reverseGame.tsx": $5,
     "./routes/index.tsx": $6,
     "./routes/old_index.tsx": $7,
+    "./routes/posts/[slug].tsx": $8,
+    "./routes/posts/index.tsx": $9,
   },
   islands: {
     "./islands/BrickBlockAnywhere.tsx": $$0,
