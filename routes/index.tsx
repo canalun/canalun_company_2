@@ -99,6 +99,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
           zIndex: "-9999999999999",
           margin: "0px",
           overscrollBehaviorY: "none",
+          overflowX: "hidden",
         }}
       >
         <div
@@ -162,7 +163,7 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
           class="background"
           style={{
             background: `linear-gradient(${OceanPalette.blue.sea}, ${OceanPalette.blue.deepSea})`,
-            width: "100%",
+            width: "100vw",
             position: "relative",
             overflow: "hidden",
             containerType: "inline-size",
