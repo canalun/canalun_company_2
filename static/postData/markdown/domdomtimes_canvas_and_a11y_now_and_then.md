@@ -20,7 +20,7 @@ canvas-based renderingという言葉は、この記事では「canvasをゴリ�
 さて「canvas-based renderingって言うけどそんなサイトあるかよ？？」って思われるかもしれません。  
 これがまあ意外とあるんですね。例えばGoogle Docs。2021年にGoogleがcanvasで行くわ〜って言って以降、今日までガチでcanvasでがんばっています。当時のみんなの反応がHNでも見れますよ👶
 https://news.ycombinator.com/item?id=27129858
-![Google Docsのメインのエディターの部分がcanvas要素であることをDev Toolsで確かめている画像](/images/google_docs_canvas.png)
+![Google Docsのメインのエディターの部分がcanvas要素であることをDev Toolsで確かめている画像](/postData/images/google_docs_canvas.png)
 
 他にはGoogle Sheets(スプシ)もそうですよね。  
 また、フレームワークで言うと、Reactと同じ書き味でcanvasアプリケーションを作れるkonvaがあったり、Flutter on the Webはcanvas-based renderingをサポートしています。
@@ -53,7 +53,7 @@ const a = 0;
 # じゃあa11yは？？
 じゃあcanvas-based renderingのもとでa11yはどうなるのでしょうか？？  
 DOMは、みなさんもご存知のようにバチバチにセマンティクスが定められておりDOMからAOMを構築することができます。  
-![DOMツリーからAOMツリーが構築されることを説明したWICGによるイラストレーション](/images/DOM-a11y-tree.png)
+![DOMツリーからAOMツリーが構築されることを説明したWICGによるイラストレーション](/postData/images/DOM-a11y-tree.png)
 *WICGドキュメントより(https://github.com/WICG/aom/blob/gh-pages/explainer.md#background-dom-tree-accessibility-tree-and-platform-accessibility-apis)*
 
 一方で**canvasはただのpixelでしかないので、ブラウザはそこからAOMを構築することはできません**。そりゃそうだという感じです。  
@@ -98,7 +98,7 @@ https://developers.cyberagent.co.jp/blog/archives/36573/
 
 現状、AOMを作るためには、DOMを通じてブラウザにAOMを作ってもらうしかないのでFlutterも先ほど紹介したようなやり方をやっているわけです。  
 **そこで、「AOMを開発者が直接さわれちゃえばよくない！？」という発想が出てきます**。実際、canvas-based rendering推しのHixie氏も先ほど紹介したドキュメント内で"An ARIA-based ABI to describe the current accessibility tree"を提案しています(Wasmの話なのでAPIではなくてABIです)。  
-![開発者がcanvasでコンテンツをレンダリングし、AOMをAPIで作るというフローの図解](/images/aom_and_canvas_world.png)
+![開発者がcanvasでコンテンツをレンダリングし、AOMをAPIで作るというフローの図解](/postData/images/aom_and_canvas_world.png)
 *こんな世界なんだろうね*
 
 ただ、**この発想は現時点ではそこまで優勢ではありません**。というのも、**まさにこのアイデアが過去に`Virtual Accessibility Nodes`という名の仕様として議論され、プライバシーの問題を招くとして現在は一時停止になっています**。  
