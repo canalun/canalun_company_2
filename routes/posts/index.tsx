@@ -35,9 +35,12 @@ export default function BlogIndexPage(
       >
         <h2>Awesome Posts from Canalun Company</h2>
         <div>
-          {entries.map((entry) => (
-            <EntryCard entry={entry} />
-          ))}
+          {entries.map((entry) => {
+            return new Date("date" in entry ? entry.date : entry.publishedAt) <=
+              new Date() ? (
+              <EntryCard entry={entry} />
+            ) : null;
+          })}
         </div>
       </main>
     </body>
