@@ -14,6 +14,56 @@
       "title": "型述語(type predicate)のすこし安全な使い方",
       "path": "https://speakerdeck.com/canalun/xing-shu-yu-type-predicate-nosukosian-quan-nashi-ifang",
       "published_at": "2022/12/21"
+    },
+    {
+      "title": "Override or Be Overridden or…What?: JavaScript Client-Side Prototype Override",
+      "path": "https://medium.com/@i.am.kanaru.sato/override-or-be-overridden-or-what-javascript-client-side-prototype-override-11d7a56ce9a3",
+      "published_at": "2024/3/26"
+    },
+    {
+      "title": "DOMラッパーについて聞いてください (@めぐろLT)",
+      "path": "https://docs.google.com/presentation/d/13OKMo5oZ8dHaZLtRe16Luaalb7WGloLI/edit?usp=drive_link&ouid=110830955971099412594&rtpof=true&sd=true",
+      "published_at": "2023/11/30"
+    },
+    {
+      "title": "その要素は本当に「見えている」のか〜要素の\"visibility\"に関する考察〜 (@3rdparty.js #1)",
+      "path": "https://docs.google.com/presentation/d/1T3-HS8JKFPLUfAE81rtuQUUDRkDkQPnl/edit?usp=drive_link&ouid=110830955971099412594&rtpof=true&sd=true",
+      "published_at": "2023/8/1"
+    },
+    {
+      "title": "ゲーム「webページ崩し」の仕組み〜あなたの知らないDOMスクリプティングの世界〜 / Tearing down the game 'Brick-Break-Anywhere': Journey into the Uncharted Territories of DOM Scripting (@JSConf 2023)",
+      "path": "https://docs.google.com/presentation/d/1hjs2J4fScWcs42oJ11F9uv1iuSnb_25TEZxyJo6UlLU/edit?usp=drive_link",
+      "published_at": "2023/11/19"
+    },
+    {
+      "title": "ブラウザはどのようにしてテキストを描画しているのか？👀 ―― Chromiumにみるテキスト描画の深淵 (@フロントエンド北海道)",
+      "path": "https://docs.google.com/presentation/d/1-OyytTBfOI9vs22Xbqx3PkvUcnFQEJEOWKiJzh1h_RY/edit?usp=drive_link",
+      "published_at": "2024/8/24"
+    },
+    {
+      "title": "prototype汚染とproposalとわたしたちと (@meguro.es #26)",
+      "path": "https://docs.google.com/presentation/d/10nW95bjXKhlWhGO26f5XfTuQ2DALTQZz/edit?usp=drive_link&ouid=110830955971099412594&rtpof=true&sd=true",
+      "published_at": "2024/1/25"
+    },
+    {
+      "title": "TAPLの「第22章 型再構築」までをおさらいしたいよねえ？したくないかい？？🧙‍♀️ (@カワるガワるTAPLカタるヨる; Opening Talk)",
+      "path": "https://docs.google.com/presentation/d/1DjK-NlVd0qRC204X0NjErEpyEhT_S2ORpVpPRCR2Rzk/edit?usp=drive_link",
+      "published_at": "2024/7/24"
+    },
+    {
+      "title": "What is DOM Garbage Collection like? (@ToKyoto.js #2)",
+      "path": "https://docs.google.com/presentation/d/1p9ZND6hsi9urH6Z2rCtX4ATVBLckhufd_ZDoUzUwwEE/edit?usp=drive_link",
+      "published_at": "2024/1/12"
+    },
+    {
+      "title": "型と型安全と、時々、型推論 (@UV Study TypeScript)",
+      "path": "https://docs.google.com/presentation/d/1fxnK74Tm7rBtOZIA_dCzxZ1YLW5HEVvQ/edit?usp=drive_link&ouid=110830955971099412594&rtpof=true&sd=true",
+      "published_at": "2024/2/13"
+    },
+    {
+      "title": "TypeScriptの型システムは万能機械の夢を見るか？ (@TSKaigi Kansai 2024; Keynote)",
+      "path": "https://docs.google.com/presentation/d/1hnvPiSCI2UBIZ0x5OTl3ZFHvIGMIl3g37It1_Qd7hNA/edit?usp=drive_link",
+      "published_at": "2024/11/16"
     }
   ]
 }
