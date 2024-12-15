@@ -1,11 +1,8 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { getArticles } from "@/utils/getArticles.ts";
-import {
-  Post,
-  PostMetadata,
-  getAllPostsMetadata,
-} from "../../utils/getPost.ts";
+import { OceanPalette } from "@/theme/Palette.ts";
 import { Article } from "@/types/Articles.ts";
+import { getArticles } from "@/utils/getArticles.ts";
+import { Post, PostMetadata, getAllPostsMetadata } from "@/utils/getPost.ts";
 
 export const handler: Handlers<(Post | Article)[]> = {
   async GET(_req, ctx) {
@@ -27,26 +24,40 @@ export default function BlogIndexPage(
 ) {
   const entries = props.data;
   return (
-    <body style={{ fontFamily: "system-ui" }}>
-      <main
+    <html
+      style={{
+        minHeight: "100%",
+      }}
+    >
+      <body
         style={{
-          width: "min(60vw, 750px)",
-          fontSize: "20px",
-          margin: "8vh auto",
-          lineHeight: "2em",
+          background: `linear-gradient(${OceanPalette.blue.sea}, ${OceanPalette.blue.deepSea})`,
         }}
       >
-        <h2>Awesome Posts from Canalun Company</h2>
-        <div>
-          {entries.map((entry) => {
-            return new Date("date" in entry ? entry.date : entry.publishedAt) <=
-              new Date() ? (
-              <EntryCard entry={entry} />
-            ) : null;
-          })}
-        </div>
-      </main>
-    </body>
+        <main
+          style={{
+            fontFamily: "sans-serif",
+            width: "min(60vw, 750px)",
+            fontSize: "20px",
+            lineHeight: "2em",
+            margin: "4vh auto",
+            padding: "4vh 5vw",
+            background: "white",
+          }}
+        >
+          <h2>Awesome Posts from Canalun Company</h2>
+          <div>
+            {entries.map((entry) => {
+              return new Date(
+                "date" in entry ? entry.date : entry.publishedAt
+              ) <= new Date() ? (
+                <EntryCard entry={entry} />
+              ) : null;
+            })}
+          </div>
+        </main>
+      </body>
+    </html>
   );
 }
 
