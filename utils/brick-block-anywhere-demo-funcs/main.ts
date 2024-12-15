@@ -5,7 +5,7 @@ import {
   ballSetting,
   barSetting,
   initialBottom,
-  veilZIndex,
+  // veilZIndex,
 } from "@/utils/brick-block-anywhere-demo-funcs/settings.ts";
 import { standby } from "@/utils/brick-block-anywhere-demo-funcs/standby.ts";
 import { preventScroll } from "@/utils/brick-block-anywhere-demo-funcs/preventScroll.ts";
@@ -29,8 +29,9 @@ export function main() {
   // ブロックを計算する
   const blocks = getBlocks();
 
-  // ページに触れないように薄い膜をはる
-  initializeVeil();
+  // DEMO は拡張へのリンクがあるのでこれをやめる
+  // // ページに触れないように薄い膜をはる
+  // initializeVeil();
 
   // クリックで始まるようにする
   try {
@@ -40,19 +41,19 @@ export function main() {
   }
 }
 
-function initializeVeil() {
-  const veil = document.createElement("div");
-  Object.assign(veil.style, {
-    position: "fixed",
-    top: "0",
-    left: "0",
-    width: "100%",
-    height: "100%",
-    backgroundColor: `rgba(0, 0, 0, 0)`,
-    zIndex: veilZIndex,
-  });
-  document.body.appendChild(veil);
-}
+// function initializeVeil() {
+//   const veil = document.createElement("div");
+//   Object.assign(veil.style, {
+//     position: "fixed",
+//     top: "0",
+//     left: "0",
+//     width: "100%",
+//     height: "100%",
+//     backgroundColor: `rgba(0, 0, 0, 0)`,
+//     zIndex: veilZIndex,
+//   });
+//   document.body.appendChild(veil);
+// }
 
 function initializeBallAndBar() {
   // 余白
