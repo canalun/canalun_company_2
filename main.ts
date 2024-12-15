@@ -6,6 +6,7 @@
 
 import { start } from "$fresh/server.ts";
 import manifest from "@/fresh.gen.ts";
+import { gaPlugin } from "ga/mod.ts";
 
 // TODO: ここにエントリーのキャッシュデータの更新ロジック仕込む
 //import { cron } from "deno_cron/cron.ts";
@@ -13,4 +14,9 @@ import manifest from "@/fresh.gen.ts";
 //   console.log("5sec");
 // });
 
-await start(manifest, { port: 8100 });
+await start(manifest, {
+  port: 8100,
+  plugins: [
+    gaPlugin(), // if you want to use server side ga
+  ],
+});
