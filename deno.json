@@ -1,6 +1,7 @@
 {
   "tasks": {
-    "start": "deno run --lock deno.lock --lock-write -A --watch=static/,routes/ dev.ts"
+    "start": "deno run --allow-net --allow-read --allow-env --allow-run --watch=static/,routes/ main.ts",
+    "dev": "deno run --allow-net --allow-read --allow-write --allow-env --allow-run --watch=static/,routes/ dev.ts"
   },
   "importMap": "./import_map.json",
   "compilerOptions": {

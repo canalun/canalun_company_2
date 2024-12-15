@@ -2,37 +2,39 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/_404.tsx";
-import * as $1 from "./routes/api/joke.ts";
-import * as $2 from "./routes/guest_rooms/brickBlockAnywhere.tsx";
-import * as $3 from "./routes/guest_rooms/iframeContent.tsx";
-import * as $4 from "./routes/guest_rooms/oshiriGame.tsx";
-import * as $5 from "./routes/guest_rooms/reverseGame.tsx";
-import * as $6 from "./routes/index.tsx";
-import * as $7 from "./routes/old_index.tsx";
-import * as $8 from "./routes/posts/[slug].tsx";
-import * as $9 from "./routes/posts/index.tsx";
-import * as $$0 from "./islands/BrickBlockAnywhere.tsx";
-import * as $$1 from "./islands/OceanLogo.tsx";
+import * as $_404 from "./routes/_404.tsx";
+import * as $api_joke from "./routes/api/joke.ts";
+import * as $guest_rooms_brickBlockAnywhere from "./routes/guest_rooms/brickBlockAnywhere.tsx";
+import * as $guest_rooms_iframeContent from "./routes/guest_rooms/iframeContent.tsx";
+import * as $guest_rooms_oshiriGame from "./routes/guest_rooms/oshiriGame.tsx";
+import * as $guest_rooms_reverseGame from "./routes/guest_rooms/reverseGame.tsx";
+import * as $index from "./routes/index.tsx";
+import * as $old_index from "./routes/old_index.tsx";
+import * as $posts_slug_ from "./routes/posts/[slug].tsx";
+import * as $posts_index from "./routes/posts/index.tsx";
+import * as $BrickBlockAnywhere from "./islands/BrickBlockAnywhere.tsx";
+import * as $OceanLogo from "./islands/OceanLogo.tsx";
+import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
-    "./routes/_404.tsx": $0,
-    "./routes/api/joke.ts": $1,
-    "./routes/guest_rooms/brickBlockAnywhere.tsx": $2,
-    "./routes/guest_rooms/iframeContent.tsx": $3,
-    "./routes/guest_rooms/oshiriGame.tsx": $4,
-    "./routes/guest_rooms/reverseGame.tsx": $5,
-    "./routes/index.tsx": $6,
-    "./routes/old_index.tsx": $7,
-    "./routes/posts/[slug].tsx": $8,
-    "./routes/posts/index.tsx": $9,
+    "./routes/_404.tsx": $_404,
+    "./routes/api/joke.ts": $api_joke,
+    "./routes/guest_rooms/brickBlockAnywhere.tsx":
+      $guest_rooms_brickBlockAnywhere,
+    "./routes/guest_rooms/iframeContent.tsx": $guest_rooms_iframeContent,
+    "./routes/guest_rooms/oshiriGame.tsx": $guest_rooms_oshiriGame,
+    "./routes/guest_rooms/reverseGame.tsx": $guest_rooms_reverseGame,
+    "./routes/index.tsx": $index,
+    "./routes/old_index.tsx": $old_index,
+    "./routes/posts/[slug].tsx": $posts_slug_,
+    "./routes/posts/index.tsx": $posts_index,
   },
   islands: {
-    "./islands/BrickBlockAnywhere.tsx": $$0,
-    "./islands/OceanLogo.tsx": $$1,
+    "./islands/BrickBlockAnywhere.tsx": $BrickBlockAnywhere,
+    "./islands/OceanLogo.tsx": $OceanLogo,
   },
   baseUrl: import.meta.url,
-};
+} satisfies Manifest;
 
 export default manifest;
