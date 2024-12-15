@@ -3,6 +3,7 @@ import { OceanPalette } from "@/theme/Palette.ts";
 import { Article } from "@/types/Articles.ts";
 import { getArticles } from "@/utils/getArticles.ts";
 import { Post, PostMetadata, getAllPostsMetadata } from "@/utils/getPost.ts";
+import { Head } from "$fresh/runtime.ts";
 
 export const handler: Handlers<(Post | Article)[]> = {
   async GET(_req, ctx) {
@@ -28,7 +29,11 @@ export default function BlogIndexPage(
       style={{
         minHeight: "100%",
       }}
+      lang={"ja"}
     >
+      <Head>
+        <title>Awesome Posts</title>
+      </Head>
       <body
         style={{
           background: `linear-gradient(${OceanPalette.blue.sea}, ${OceanPalette.blue.deepSea})`,
@@ -38,13 +43,16 @@ export default function BlogIndexPage(
           style={{
             fontFamily: "sans-serif",
             width: "min(60vw, 750px)",
-            fontSize: "20px",
+            fontSize: "16px",
             lineHeight: "2em",
             margin: "4vh auto",
             padding: "4vh 5vw",
             background: "white",
           }}
         >
+          <div style={{ lineHeight: "1em" }}>
+            <a href={"/"}>back to top</a>
+          </div>
           <h2>Awesome Posts from Canalun Company</h2>
           <div>
             {entries.map((entry) => {

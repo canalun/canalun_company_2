@@ -18,11 +18,13 @@ export default function PostPage(props: PageProps<Post>) {
       <Head>
         <link rel="stylesheet" href="/zenn/zenn-content-css/index.css"></link>
         <script src="/zenn/listen-embed-event/index.js" />
+        <title>{post.title}</title>
       </Head>
       <html
         style={{
           minHeight: "100%",
         }}
+        lang={post.slug.slice(-2, post.slug.length)}
       >
         <body
           style={{
