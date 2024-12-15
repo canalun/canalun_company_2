@@ -9,7 +9,10 @@ import { Article } from "@/types/Articles.ts";
 
 export const handler: Handlers<(Post | Article)[]> = {
   async GET(_req, ctx) {
-    const metadataForAllPosts = await getAllPostsMetadata();
+    const _metadataForAllPosts = await getAllPostsMetadata();
+    const metadataForAllPosts = _metadataForAllPosts.filter((m) =>
+      m.slug.endsWith("_en")
+    );
 
     const pastArticles = await getArticles();
 

@@ -1,5 +1,6 @@
 import { Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
+import { OceanPalette } from "@/theme/Palette.ts";
 import { Post, getPost } from "../../utils/getPost.ts";
 
 export const handler: Handlers<Post> = {
@@ -18,38 +19,69 @@ export default function PostPage(props: PageProps<Post>) {
         <link rel="stylesheet" href="/zenn/zenn-content-css/index.css"></link>
         <script src="/zenn/listen-embed-event/index.js" />
       </Head>
-      <body>
-        <main
+      <html
+        style={{
+          minHeight: "100%",
+        }}
+      >
+        <body
           style={{
-            fontFamily: "sans-serif",
-            width: "min(60vw, 750px)",
-            fontSize: "16px",
-            margin: "8vh auto",
+            background: `linear-gradient(${OceanPalette.blue.sea}, ${OceanPalette.blue.deepSea})`,
           }}
         >
-          <h1>{post.title}</h1>
-          <time>
-            {new Date(post.publishedAt).toLocaleDateString("en-us", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </time>
-          <br></br>
-          <br></br>
-          <br></br>
-          <div
-            className="znc"
+          <main
             style={{
-              lineHeight: "2em",
+              fontFamily: "sans-serif",
+              width: "min(60vw, 750px)",
+              fontSize: "16px",
+              margin: "4vh auto",
+              padding: "4vh 5vw",
+              background: "white",
             }}
-            dangerouslySetInnerHTML={{
-              __html:
-                post.content ?? "<div>oh no...the post is unavailable...</div>",
-            }}
-          />
-        </main>
-      </body>
+          >
+            <div style={{ marginBottom: "1em" }}>
+              <a href={"/posts"}>back to list</a>
+            </div>
+            <div style={{ marginBottom: "1em" }}>
+              <span style={{ marginRight: "1em" }}>lang:</span>
+              <a
+                href={`/posts/${post.slug.slice(0, -3)}_ja`}
+                style={{ marginRight: "1em" }}
+              >
+                ja
+              </a>
+              <a
+                href={`/posts/${post.slug.slice(0, -3)}_en`}
+                style={{ marginRight: "1em" }}
+              >
+                en
+              </a>
+            </div>
+            <h1>{post.title}</h1>
+            <time>
+              {new Date(post.publishedAt).toLocaleDateString("en-us", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+            <br></br>
+            <br></br>
+            <br></br>
+            <div
+              className="znc"
+              style={{
+                lineHeight: "2em",
+              }}
+              dangerouslySetInnerHTML={{
+                __html:
+                  post.content ??
+                  "<div>oh no...the post is unavailable...</div>",
+              }}
+            />
+          </main>
+        </body>
+      </html>
     </>
   );
 }
