@@ -33,7 +33,7 @@ export default function PostPage(props: PageProps<Post>) {
         >
           <main
             style={{
-              fontFamily: "sans-serif",
+              fontFamily: "system-ui",
               width: "min(60vw, 750px)",
               fontSize: "16px",
               margin: "4vh auto",
