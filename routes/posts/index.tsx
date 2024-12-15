@@ -41,7 +41,7 @@ export default function BlogIndexPage(
       >
         <main
           style={{
-            fontFamily: "sans-serif",
+            fontFamily: "system-ui",
             width: "min(60vw, 750px)",
             fontSize: "16px",
             lineHeight: "2em",
@@ -53,7 +53,7 @@ export default function BlogIndexPage(
           <div style={{ lineHeight: "1em" }}>
             <a href={"/"}>back to top</a>
           </div>
-          <h2>Awesome Posts from Canalun Company</h2>
+          <h1>Awesome Posts from Canalun Company</h1>
           <div>
             {entries.map((entry) => {
               return new Date(
