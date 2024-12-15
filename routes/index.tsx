@@ -212,7 +212,12 @@ export default function Ocean({ data: article }: PageProps<Article[]>) {
                 <div style={{ height: `calc(95% - ${h3fontSize} - 10px)` }}>
                   {/* h3のサイズをひいてあげて、余白いっぱいにコンテンツを配置: https://zenn.dev/orihika0123/articles/2022-05-04-nyarome-flexbox-width#%E6%AD%A3%E3%81%97%E3%81%84%E6%9B%B8%E3%81%8D%E6%96%B9%E3%81%9D%E3%81%AE1(calc%E3%82%92%E4%BD%BF%E3%81%86)*/}
                   <ScrollableContainer scrollBarColor={OceanPalette.blue.sea}>
-                    <ArticleList articles={article} fontSize="18px" />
+                    <ArticleList
+                      articles={article}
+                      fontSize="18px"
+                      maxNum={3}
+                      withTags={false}
+                    />
                   </ScrollableContainer>
                 </div>
               </ThoughtBubble>,

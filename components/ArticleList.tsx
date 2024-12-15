@@ -6,61 +6,65 @@ import {
 } from "@/types/Articles.ts";
 import { OceanPalette } from "@/theme/Palette.ts";
 
-export function ArticleList(props: { articles: Article[]; fontSize: string }) {
+export function ArticleList(props: {
+  articles: Article[];
+  fontSize: string;
+  maxNum?: number;
+  withTags: boolean;
+}) {
   const tagColor: {
     [K in Category]: { fontColor: string; backgroundColor: string };
   } = {
-    "engineering": {
+    engineering: {
       fontColor: OceanPalette.white.basic,
       backgroundColor: OceanPalette.blue.sea,
     },
-    "javascript": {
+    javascript: {
       fontColor: OceanPalette.white.basic,
       backgroundColor: OceanPalette.blue.sky,
     },
-    "typescript": {
+    typescript: {
       fontColor: OceanPalette.white.basic,
       backgroundColor: OceanPalette.blue.deepSea,
     },
-    "serverside": {
+    serverside: {
       fontColor: OceanPalette.white.basic,
       backgroundColor: OceanPalette.blue.mid,
     },
-    "debate": { fontColor: "black", backgroundColor: OceanPalette.white.basic },
-    "thoughts": {
+    debate: { fontColor: "black", backgroundColor: OceanPalette.white.basic },
+    thoughts: {
       fontColor: OceanPalette.white.basic,
       backgroundColor: OceanPalette.brown.ground,
     },
-    "philosophy": {
+    philosophy: {
       fontColor: OceanPalette.white.basic,
       backgroundColor: OceanPalette.brown.bottomOfTheSea,
     },
   };
-  return (
-    props.articles
-      ? (
-        <ul
-          style={{
-            paddingLeft: "0",
-            marginTop: "0",
-            fontSize: `${props.fontSize}`,
-          }}
-        >
-          {props.articles.map((a) => {
-            return (
-              <li
-                style={{
-                  "list-style": "none",
-                  "marginBottom": "10px",
-                }}
-              >
-                <div>
-                  {a.date.toLocaleDateString()}:{" "}
-                  <a
-                    href={a.link}
-                  >
-                    {a.title}
-                  </a>
+  const articles = props.articles.slice(0, props.maxNum);
+  return articles ? (
+    <div style={{ lineHeight: "1.2em", fontSize: `${props.fontSize}` }}>
+      <ul
+        style={{
+          paddingLeft: "0",
+        }}
+      >
+        {articles.map((a) => {
+          return (
+            <li
+              style={{
+                "list-style": "none",
+                marginBottom: "10px",
+              }}
+            >
+              <div>
+                {a.date.toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+                : <a href={a.link}>{a.title}</a>
+                {props.withTags ? (
                   <div>
                     {a.category.map((category) => {
                       return (
@@ -94,12 +98,15 @@ export function ArticleList(props: { articles: Article[]; fontSize: string }) {
                       #{languageMap.get(a.language)}
                     </span>
                   </div>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      )
-      : <div>coming soon...</div>
+                ) : null}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+      <a href="/posts">🙌See More🙌</a>
+    </div>
+  ) : (
+    <div>coming soon...</div>
   );
 }
