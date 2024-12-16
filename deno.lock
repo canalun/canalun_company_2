@@ -781,8 +781,10 @@
     "https://esm.sh/stable/preact@10.19.1/denonext/debug.js": "fda564ade2e1d8c39ba237d35be08ec62fca133a23087035b199c9b97de53915",
     "https://esm.sh/stable/preact@10.19.1/denonext/devtools.js": "cf2eda38ca243431ab2bb34e385500e3620858809a5362a59766432701647ce2",
     "https://esm.sh/stable/preact@10.19.1/denonext/hooks.js": "1c69f56e6f97e43c267cd22d7e639dd32ab05fe5a3d06f8b6532313a1f8c85af",
+    "https://esm.sh/stable/preact@10.19.1/denonext/hooks/src.js": "5e86931c4b86aa83eca42abe6f66097ded836c97cfa63009365794e3ebc8b810",
     "https://esm.sh/stable/preact@10.19.1/denonext/jsx-runtime.js": "103ecf9fe769f04ff46d6190d69b7b38f6bce0616706719160cea4f04ad40fc6",
     "https://esm.sh/stable/preact@10.19.1/denonext/preact.mjs": "df1ca6475ddad5e4db2d2b5621a3a6117f42bd63b31a4185550822d1639bb109",
+    "https://esm.sh/v128/preact@10.19.1/hooks/src/index.js": "4a79acfb11494305ad9a27bb2ffd8c6b10d55c15e3102141565dddb6c8a078b9",
     "https://esm.sh/v135/@babel/helper-validator-identifier@7.22.20/denonext/helper-validator-identifier.mjs": "1ad312a9040d1f3b096e90a3e6a9da7ecfc99662140852fe3862a316c2591c93",
     "https://esm.sh/v135/preact-render-to-string@6.2.2/X-ZS8q/denonext/preact-render-to-string.mjs": "55283fc14993c67474322e5632215b2a06deeb7d4ff986031dcfff31a5b0b74c",
     "https://esm.sh/v135/preact-render-to-string@6.3.1/X-ZS8q/denonext/preact-render-to-string.mjs": "bcaceb8c3938310aee3dd4f7b6f2136cf0b2b890988c2e6679485e052e76e920"

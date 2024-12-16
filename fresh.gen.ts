@@ -9,10 +9,13 @@ import * as $guest_rooms_iframeContent from "./routes/guest_rooms/iframeContent.
 import * as $guest_rooms_oshiriGame from "./routes/guest_rooms/oshiriGame.tsx";
 import * as $guest_rooms_reverseGame from "./routes/guest_rooms/reverseGame.tsx";
 import * as $index from "./routes/index.tsx";
+import * as $lab_espionageMagicFrame from "./routes/lab/espionageMagicFrame.tsx";
+import * as $lab_index from "./routes/lab/index.tsx";
 import * as $old_index from "./routes/old_index.tsx";
 import * as $posts_slug_ from "./routes/posts/[slug].tsx";
 import * as $posts_index from "./routes/posts/index.tsx";
 import * as $BrickBlockAnywhere from "./islands/BrickBlockAnywhere.tsx";
+import * as $MagicFrame from "./islands/MagicFrame.tsx";
 import * as $OceanLogo from "./islands/OceanLogo.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
@@ -26,12 +29,15 @@ const manifest = {
     "./routes/guest_rooms/oshiriGame.tsx": $guest_rooms_oshiriGame,
     "./routes/guest_rooms/reverseGame.tsx": $guest_rooms_reverseGame,
     "./routes/index.tsx": $index,
+    "./routes/lab/espionageMagicFrame.tsx": $lab_espionageMagicFrame,
+    "./routes/lab/index.tsx": $lab_index,
     "./routes/old_index.tsx": $old_index,
     "./routes/posts/[slug].tsx": $posts_slug_,
     "./routes/posts/index.tsx": $posts_index,
   },
   islands: {
     "./islands/BrickBlockAnywhere.tsx": $BrickBlockAnywhere,
+    "./islands/MagicFrame.tsx": $MagicFrame,
     "./islands/OceanLogo.tsx": $OceanLogo,
   },
   baseUrl: import.meta.url,
