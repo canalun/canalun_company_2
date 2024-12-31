@@ -77,23 +77,42 @@
         .clone();
       f.contentWindow.setTimeout(() => {
         f.contentWindow.BatteryManager = clonedBatteryManager;
-      }, 500);
+      }, 400);
 
+      //////// battery charging status fingerprint ////////
+      setTimeout(() => {
+        // protected fingerprint (not working)
+        window.navigator.getBattery().then((battery) => {
+          battery.addEventListener("chargingchange", (e) => {
+            addInfo(
+              `protected: charging switched: ${
+                e.target.charging ? "No -> Yes" : "Yes -> No"
+              }`,
+            );
+          });
+        });
+
+        // bypassed fingerprint (working)
+        f.contentWindow.navigator.getBattery().then((battery) =>
+          battery.addEventListener("chargingchange", (e) => {
+            addInfo(
+              `bypassed: charging switched: ${
+                e.target.charging ? "No -> Yes" : "Yes -> No"
+              }`,
+            );
+          })
+        );
+      }, 600);
+
+      //////// battery info fingerprint ////////
       document.getElementById("battery").addEventListener(
         "click",
         () => {
           // protected fingerprint (not working)
-          window.navigator.getBattery().then((i) => {
+          window.navigator.getBattery().then((battery) => {
             addInfo(
-              `protected: charging: ${i.charging}, chargingTime: ${i.chargingTime}, dischargingTime: ${i.dischargingTime}, level: ${i.level}`,
+              `protected: charging: ${battery.charging}, chargingTime: ${battery.chargingTime}, dischargingTime: ${battery.dischargingTime}, level: ${battery.level}`,
             );
-            i.addEventListener("chargingchange", (e) => {
-              addInfo(
-                `protected: charging switched: ${
-                  e.target.charging ? "No -> Yes" : "Yes -> No"
-                }`,
-              );
-            });
           });
 
           // bypassed fingerprint (working)
@@ -101,13 +120,6 @@
             addInfo(
               `bypassed: charging: ${battery.charging}, chargingTime: ${battery.chargingTime}, dischargingTime: ${battery.dischargingTime}, level: ${battery.level}`,
             );
-            battery.addEventListener("chargingchange", (e) => {
-              addInfo(
-                `bypassed: charging switched: ${
-                  e.target.charging ? "No -> Yes" : "Yes -> No"
-                }`,
-              );
-            });
           });
         },
       );
